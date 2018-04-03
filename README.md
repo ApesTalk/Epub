@@ -4,5 +4,5 @@
 
 目录说明：
 
-- explore EPub电子书阅读器的探索历程，包括对同类APP的分析
+- Explore EPub电子书阅读器的探索历程，包括对同类APP的分析
 
