@@ -1,0 +1,544 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6D39040A2071D15B00348EAE /* column.html in Resources */ = {isa = PBXBuildFile; fileRef = 6D3904092071D15B00348EAE /* column.html */; };
+		6D4C1E6F2070E0BE00F897E4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */; };
+		6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E712070E0BE00F897E4 /* ViewController.m */; };
+		6D4C1E772070E0BE00F897E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6D4C1E762070E0BE00F897E4 /* Assets.xcassets */; };
+		6D4C1E7D2070E0BE00F897E4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E7C2070E0BE00F897E4 /* main.m */; };
+		6D4C1E872070E0BE00F897E4 /* YLEpubReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E862070E0BE00F897E4 /* YLEpubReaderTests.m */; };
+		6D4C1E922070E0BE00F897E4 /* YLEpubReaderUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E912070E0BE00F897E4 /* YLEpubReaderUITests.m */; };
+		6D4C1EA12070E2E000F897E4 /* YLTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1EA02070E2E000F897E4 /* YLTestViewController.m */; };
+		6DF981D4207C693F009AE2C0 /* chapter_269231114.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */; };
+		6DF981D6207C6A1C009AE2C0 /* stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D5207C6A1C009AE2C0 /* stylesheet.css */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6D4C1E832070E0BE00F897E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D4C1E622070E0BE00F897E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D4C1E692070E0BE00F897E4;
+			remoteInfo = YLEpubReader;
+		};
+		6D4C1E8E2070E0BE00F897E4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6D4C1E622070E0BE00F897E4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6D4C1E692070E0BE00F897E4;
+			remoteInfo = YLEpubReader;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6D3904092071D15B00348EAE /* column.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = column.html; sourceTree = "<group>"; };
+		6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YLEpubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		6D4C1E702070E0BE00F897E4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		6D4C1E712070E0BE00F897E4 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		6D4C1E762070E0BE00F897E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6D4C1E7B2070E0BE00F897E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D4C1E7C2070E0BE00F897E4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6D4C1E822070E0BE00F897E4 /* YLEpubReaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YLEpubReaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4C1E862070E0BE00F897E4 /* YLEpubReaderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLEpubReaderTests.m; sourceTree = "<group>"; };
+		6D4C1E882070E0BE00F897E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D4C1E8D2070E0BE00F897E4 /* YLEpubReaderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YLEpubReaderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4C1E912070E0BE00F897E4 /* YLEpubReaderUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLEpubReaderUITests.m; sourceTree = "<group>"; };
+		6D4C1E932070E0BE00F897E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6D4C1E9F2070E2E000F897E4 /* YLTestViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLTestViewController.h; sourceTree = "<group>"; };
+		6D4C1EA02070E2E000F897E4 /* YLTestViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLTestViewController.m; sourceTree = "<group>"; };
+		6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chapter_269231114.xhtml; sourceTree = "<group>"; };
+		6DF981D5207C6A1C009AE2C0 /* stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = stylesheet.css; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6D4C1E672070E0BE00F897E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E7F2070E0BE00F897E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E8A2070E0BE00F897E4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6D4C1E612070E0BE00F897E4 = {
+			isa = PBXGroup;
+			children = (
+				6DF981D5207C6A1C009AE2C0 /* stylesheet.css */,
+				6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */,
+				6D3904092071D15B00348EAE /* column.html */,
+				6D4C1E6C2070E0BE00F897E4 /* YLEpubReader */,
+				6D4C1E852070E0BE00F897E4 /* YLEpubReaderTests */,
+				6D4C1E902070E0BE00F897E4 /* YLEpubReaderUITests */,
+				6D4C1E6B2070E0BE00F897E4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6D4C1E6B2070E0BE00F897E4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */,
+				6D4C1E822070E0BE00F897E4 /* YLEpubReaderTests.xctest */,
+				6D4C1E8D2070E0BE00F897E4 /* YLEpubReaderUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6D4C1E6C2070E0BE00F897E4 /* YLEpubReader */ = {
+			isa = PBXGroup;
+			children = (
+				6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */,
+				6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */,
+				6D4C1E702070E0BE00F897E4 /* ViewController.h */,
+				6D4C1E712070E0BE00F897E4 /* ViewController.m */,
+				6D4C1E762070E0BE00F897E4 /* Assets.xcassets */,
+				6D4C1E7B2070E0BE00F897E4 /* Info.plist */,
+				6D4C1E7C2070E0BE00F897E4 /* main.m */,
+				6D4C1E9F2070E2E000F897E4 /* YLTestViewController.h */,
+				6D4C1EA02070E2E000F897E4 /* YLTestViewController.m */,
+			);
+			path = YLEpubReader;
+			sourceTree = "<group>";
+		};
+		6D4C1E852070E0BE00F897E4 /* YLEpubReaderTests */ = {
+			isa = PBXGroup;
+			children = (
+				6D4C1E862070E0BE00F897E4 /* YLEpubReaderTests.m */,
+				6D4C1E882070E0BE00F897E4 /* Info.plist */,
+			);
+			path = YLEpubReaderTests;
+			sourceTree = "<group>";
+		};
+		6D4C1E902070E0BE00F897E4 /* YLEpubReaderUITests */ = {
+			isa = PBXGroup;
+			children = (
+				6D4C1E912070E0BE00F897E4 /* YLEpubReaderUITests.m */,
+				6D4C1E932070E0BE00F897E4 /* Info.plist */,
+			);
+			path = YLEpubReaderUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6D4C1E692070E0BE00F897E4 /* YLEpubReader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D4C1E962070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReader" */;
+			buildPhases = (
+				6D4C1E662070E0BE00F897E4 /* Sources */,
+				6D4C1E672070E0BE00F897E4 /* Frameworks */,
+				6D4C1E682070E0BE00F897E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YLEpubReader;
+			productName = YLEpubReader;
+			productReference = 6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6D4C1E812070E0BE00F897E4 /* YLEpubReaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D4C1E992070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReaderTests" */;
+			buildPhases = (
+				6D4C1E7E2070E0BE00F897E4 /* Sources */,
+				6D4C1E7F2070E0BE00F897E4 /* Frameworks */,
+				6D4C1E802070E0BE00F897E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D4C1E842070E0BE00F897E4 /* PBXTargetDependency */,
+			);
+			name = YLEpubReaderTests;
+			productName = YLEpubReaderTests;
+			productReference = 6D4C1E822070E0BE00F897E4 /* YLEpubReaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6D4C1E8C2070E0BE00F897E4 /* YLEpubReaderUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6D4C1E9C2070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReaderUITests" */;
+			buildPhases = (
+				6D4C1E892070E0BE00F897E4 /* Sources */,
+				6D4C1E8A2070E0BE00F897E4 /* Frameworks */,
+				6D4C1E8B2070E0BE00F897E4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6D4C1E8F2070E0BE00F897E4 /* PBXTargetDependency */,
+			);
+			name = YLEpubReaderUITests;
+			productName = YLEpubReaderUITests;
+			productReference = 6D4C1E8D2070E0BE00F897E4 /* YLEpubReaderUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6D4C1E622070E0BE00F897E4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0910;
+				ORGANIZATIONNAME = "https://github.com/lqcjdx";
+				TargetAttributes = {
+					6D4C1E692070E0BE00F897E4 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+					};
+					6D4C1E812070E0BE00F897E4 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 6D4C1E692070E0BE00F897E4;
+					};
+					6D4C1E8C2070E0BE00F897E4 = {
+						CreatedOnToolsVersion = 9.1;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 6D4C1E692070E0BE00F897E4;
+					};
+				};
+			};
+			buildConfigurationList = 6D4C1E652070E0BE00F897E4 /* Build configuration list for PBXProject "YLEpubReader" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6D4C1E612070E0BE00F897E4;
+			productRefGroup = 6D4C1E6B2070E0BE00F897E4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6D4C1E692070E0BE00F897E4 /* YLEpubReader */,
+				6D4C1E812070E0BE00F897E4 /* YLEpubReaderTests */,
+				6D4C1E8C2070E0BE00F897E4 /* YLEpubReaderUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6D4C1E682070E0BE00F897E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D39040A2071D15B00348EAE /* column.html in Resources */,
+				6DF981D4207C693F009AE2C0 /* chapter_269231114.xhtml in Resources */,
+				6D4C1E772070E0BE00F897E4 /* Assets.xcassets in Resources */,
+				6DF981D6207C6A1C009AE2C0 /* stylesheet.css in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E802070E0BE00F897E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E8B2070E0BE00F897E4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6D4C1E662070E0BE00F897E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */,
+				6D4C1EA12070E2E000F897E4 /* YLTestViewController.m in Sources */,
+				6D4C1E7D2070E0BE00F897E4 /* main.m in Sources */,
+				6D4C1E6F2070E0BE00F897E4 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E7E2070E0BE00F897E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D4C1E872070E0BE00F897E4 /* YLEpubReaderTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6D4C1E892070E0BE00F897E4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D4C1E922070E0BE00F897E4 /* YLEpubReaderUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6D4C1E842070E0BE00F897E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D4C1E692070E0BE00F897E4 /* YLEpubReader */;
+			targetProxy = 6D4C1E832070E0BE00F897E4 /* PBXContainerItemProxy */;
+		};
+		6D4C1E8F2070E0BE00F897E4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6D4C1E692070E0BE00F897E4 /* YLEpubReader */;
+			targetProxy = 6D4C1E8E2070E0BE00F897E4 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6D4C1E942070E0BE00F897E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6D4C1E952070E0BE00F897E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6D4C1E972070E0BE00F897E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6D4C1E982070E0BE00F897E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReader";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6D4C1E9A2070E0BE00F897E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YLEpubReader.app/YLEpubReader";
+			};
+			name = Debug;
+		};
+		6D4C1E9B2070E0BE00F897E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YLEpubReader.app/YLEpubReader";
+			};
+			name = Release;
+		};
+		6D4C1E9D2070E0BE00F897E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReaderUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YLEpubReader;
+			};
+			name = Debug;
+		};
+		6D4C1E9E2070E0BE00F897E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = YLEpubReaderUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = YLEpubReader;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6D4C1E652070E0BE00F897E4 /* Build configuration list for PBXProject "YLEpubReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D4C1E942070E0BE00F897E4 /* Debug */,
+				6D4C1E952070E0BE00F897E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D4C1E962070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D4C1E972070E0BE00F897E4 /* Debug */,
+				6D4C1E982070E0BE00F897E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D4C1E992070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D4C1E9A2070E0BE00F897E4 /* Debug */,
+				6D4C1E9B2070E0BE00F897E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6D4C1E9C2070E0BE00F897E4 /* Build configuration list for PBXNativeTarget "YLEpubReaderUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6D4C1E9D2070E0BE00F897E4 /* Debug */,
+				6D4C1E9E2070E0BE00F897E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6D4C1E622070E0BE00F897E4 /* Project object */;
+}
