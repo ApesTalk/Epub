@@ -1,9 +1,9 @@
 body{
-/*margin:0px;*/
+margin:0px;
 height: 568px;
 /*width: 320px;*/
-column-width: 290px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
-column-gap: 15px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
+column-width: 280px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
+column-gap: 0px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
 text-align: justify;/*文字两端对齐*/
 font-size: 1.0em;word-wrap:break-word;
 }
@@ -43,6 +43,6 @@ a[href] {
     }
 
 .bookcontent {
-    padding-left: 15px;/*左边内间距*/
-    padding-right: 15px;/*右边内间距*/
+    padding-left: 20px;/*左边内间距*/
+    padding-right: 20px;/*右边内间距*/
 }

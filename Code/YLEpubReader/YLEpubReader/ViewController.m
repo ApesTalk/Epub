@@ -99,7 +99,7 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     CGSize contentSize = webView.scrollView.contentSize;
-    contentSize.width += 15;
+//    contentSize.width += 10;
     contentSize.height = self.view.bounds.size.height;
     webView.scrollView.contentSize = contentSize;
 }
