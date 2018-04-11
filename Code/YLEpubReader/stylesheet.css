@@ -1,10 +1,10 @@
 body{
-/*margin:10px;*/
+/*margin:0px;*/
 height: 568px;
-width: 300px;
-column-width: 300px;
-column-gap: 40px;
-text-align: justify;
+/*width: 320px;*/
+column-width: 290px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
+column-gap: 15px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
+text-align: justify;/*文字两端对齐*/
 font-size: 1.0em;word-wrap:break-word;
 }
 ul,li{list-style-type:none;margin:0;padding:0;}
@@ -43,7 +43,6 @@ a[href] {
     }
 
 .bookcontent {
-    
-    padding-left:50px;
-    padding-right:50px;
+    padding-left: 15px;/*左边内间距*/
+    padding-right: 15px;/*右边内间距*/
 }

@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import "YLTestViewController.h"
 
-@interface ViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIWebViewDelegate, UIScrollViewDelegate>
+@interface ViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIWebViewDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, copy) NSArray *colorsArray;
 @end
@@ -22,8 +22,9 @@
     webView.backgroundColor = [UIColor whiteColor];
     webView.delegate = self;
     webView.scrollView.pagingEnabled = YES;
-//    webView.scrollView.contentInset = UIEdgeInsetsMake(0, 20, 0, 20);
-//    webView.scrollView.delegate = self;
+    webView.scrollView.showsVerticalScrollIndicator = NO;
+    webView.scrollView.showsHorizontalScrollIndicator = NO;
+    webView.scrollView.bounces = NO;
     [self.view addSubview:webView];
     NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
     NSURL *url = [NSURL fileURLWithPath:path];
@@ -97,7 +98,10 @@
 #pragma mark---UIWebViewDelegate
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    
+    CGSize contentSize = webView.scrollView.contentSize;
+    contentSize.width += 15;
+    contentSize.height = self.view.bounds.size.height;
+    webView.scrollView.contentSize = contentSize;
 }
 
 #pragma mark---UIScrollViewDelegate
