@@ -1,11 +1,11 @@
 body{
-margin:0px;
-height: 568px;
-/*width: 320px;*/
-column-width: 280px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
-column-gap: 0px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
-text-align: justify;/*文字两端对齐*/
-font-size: 1.0em;word-wrap:break-word;
+    margin:0px;
+    height: 568px;
+    /*width: 320px;*/
+    column-width: 280px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
+    column-gap: 0px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
+    text-align: justify;/*文字两端对齐*/
+    font-size: 1.0em;word-wrap:break-word;
 }
 ul,li{list-style-type:none;margin:0;padding:0;}
 p{text-indent:2em; line-height:1.5em; margin-top:0; margin-bottom:1.5em;}
