@@ -8,8 +8,12 @@
 
 #import "ViewController.h"
 #import "YLTestViewController.h"
+#import "ZipArchive.h"
+#import "YLEpubManager.h"
+#import "YLEpub.h"
+#import "YLXMLManager.h"
 
-@interface ViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIWebViewDelegate>
+@interface ViewController () <UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIWebViewDelegate,SSZipArchiveDelegate,YLXMLManagerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, copy) NSArray *colorsArray;
 @end
@@ -18,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
+//    YLEpub *epub = [[YLEpub alloc]initWithName:@"陈二狗的妖孽人生" filePath:filePath];
+//    BOOL b = [YLEpubManager unZipEpubWithPath:filePath delegate:self];
+//    epub.unZipedPath = [YLEpubManager unZipedPathForEpub:epub];
+    
     UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     webView.backgroundColor = [UIColor whiteColor];
     webView.delegate = self;
@@ -25,6 +34,7 @@
     webView.scrollView.showsVerticalScrollIndicator = NO;
     webView.scrollView.showsHorizontalScrollIndicator = NO;
     webView.scrollView.bounces = NO;
+    webView.scrollView.tintColor = [UIColor redColor];
     [self.view addSubview:webView];
     NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
     NSURL *url = [NSURL fileURLWithPath:path];
@@ -59,6 +69,19 @@
     [self.view addSubview:_pageViewController.view];
     
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+}
+
+#pragma mark---SSZipArchiveDelegate
+- (void)zipArchiveProgressEvent:(unsigned long long)loaded total:(unsigned long long)total
+{
+    NSLog(@"zip loaded=%llu ,total=%llu",loaded, total);
+    //这里处理进度
+}
+
+#pragma mark---YLXMLManagerDelegate
+- (void)xmlManager:(YLXMLManager *)manager didFoundFullPath:(NSString *)fullPath
+{
+//    NSString *opsFolderPath = [YLEpubManager unZipedPathForEpub:]
 }
 
 #pragma mark---UIPageViewControllerDataSource
