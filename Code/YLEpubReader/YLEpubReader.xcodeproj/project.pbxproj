@@ -233,19 +233,11 @@
 		6D5D85A72082373A00D8D902 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				6D5D85A82082373A00D8D902 /* Controllers */,
 				6D5D85A92082373A00D8D902 /* Models */,
 				6D5D85AA2082373A00D8D902 /* Tools */,
 				6D5D85AB2082373A00D8D902 /* Views */,
 			);
 			path = Common;
-			sourceTree = "<group>";
-		};
-		6D5D85A82082373A00D8D902 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		6D5D85A92082373A00D8D902 /* Models */ = {

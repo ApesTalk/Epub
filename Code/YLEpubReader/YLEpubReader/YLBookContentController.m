@@ -8,6 +8,7 @@
 
 #import "YLBookContentController.h"
 #import <WebKit/WebKit.h>
+#import "YLEpubManager.h"
 
 @interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate>
 @property (nonatomic, strong) WKWebView *webView;
@@ -36,19 +37,13 @@
 {
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSInteger bodyStartIndex = [htmlStr rangeOfString:@"<body>"].location;
-    NSString *script = @"<script type='text/javascript'>"
-                            "window.onload = function(){"
-                            "document.body.margin = 0px;"
-                            "document.body.height = 568px;"
-                            "document.body.column-width = 280px;"
-                            "document.body.column-gap = 0px;"
-                            "document.body.text-align = justify;"
-                        "</script>";///< 图片元素宽度等于屏幕宽度，高度自适应
-    [htmlStr insertString:script atIndex:bodyStartIndex + 6];
     if(bodyStartIndex != NSNotFound){
-        
+        [htmlStr insertString:@"<div class='bookcontent'>" atIndex:bodyStartIndex + 6];
     }
     NSInteger bodyEndIndex = [htmlStr rangeOfString:@"</body>"].location;
+    if(bodyEndIndex != NSNotFound){
+        [htmlStr insertString:@"</div>" atIndex:bodyEndIndex];
+    }
     [self.webView loadHTMLString:htmlStr baseURL:[NSURL URLWithString:path]];
 }
 

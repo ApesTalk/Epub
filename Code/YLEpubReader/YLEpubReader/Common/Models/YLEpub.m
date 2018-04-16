@@ -8,6 +8,7 @@
 
 #import "YLEpub.h"
 #import "YLEpubManager.h"
+#import "YLStatics.h"
 
 @implementation YLEpub
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path
@@ -71,4 +72,21 @@
     return nil;
 }
 
+- (void)modifyCss
+{
+    //修改body样式，添加bookcontent样式
+    if(_opsPath && _mainifest && [_mainifest objectForKey:@"css"]){
+        NSString *cssPath = [NSString stringWithFormat:@"%@%@", _opsPath, [_mainifest objectForKey:@"css"]];
+        NSError *error;
+        NSString *cssStr = [[NSString alloc]initWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:&error];
+        if(error || [cssStr containsString:kBookContentDiv]){
+            return;
+        }
+        NSString *bookcontent = [NSString stringWithFormat:@"%@ {padding-left: 20px;padding-right: 20px;}", kBookContentDiv];
+        cssStr = [cssStr stringByAppendingString:bookcontent];
+        //修改body样式
+        [cssStr writeToFile:cssPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"error=%@", error);
+    }
+}
 @end
