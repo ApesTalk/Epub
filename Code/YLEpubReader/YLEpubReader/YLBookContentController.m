@@ -9,6 +9,7 @@
 #import "YLBookContentController.h"
 #import <WebKit/WebKit.h>
 #import "YLEpubManager.h"
+#import "YLStatics.h"
 
 @interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate>
 @property (nonatomic, strong) WKWebView *webView;
@@ -38,7 +39,7 @@
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSInteger bodyStartIndex = [htmlStr rangeOfString:@"<body>"].location;
     if(bodyStartIndex != NSNotFound){
-        [htmlStr insertString:@"<div class='bookcontent'>" atIndex:bodyStartIndex + 6];
+        [htmlStr insertString:[NSString stringWithFormat:@"<div class='%@'>", kBookContentDiv] atIndex:bodyStartIndex + 6];
     }
     NSInteger bodyEndIndex = [htmlStr rangeOfString:@"</body>"].location;
     if(bodyEndIndex != NSNotFound){

@@ -9,6 +9,7 @@
 #import "YLEpub.h"
 #import "YLEpubManager.h"
 #import "YLStatics.h"
+#import <UIKit/UIKit.h>
 
 @implementation YLEpub
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path
@@ -82,8 +83,28 @@
         if(error || [cssStr containsString:kBookContentDiv]){
             return;
         }
-        NSString *bookcontent = [NSString stringWithFormat:@"%@ {padding-left: 20px;padding-right: 20px;}", kBookContentDiv];
-        cssStr = [cssStr stringByAppendingString:bookcontent];
+        NSInteger bodyIndex = [cssStr rangeOfString:@"body"].location;
+        if(bodyIndex == NSNotFound){
+            //新增body样式
+            NSString *bodyCss = [NSString stringWithFormat:@"body {margin:0px;height: %fpx;column-width: %fpx;column-gap: 0px;text-align: justify;font-size: 1.0em;word-wrap:break-word;}", kScreenHeight, kScreenWidth - kCSSPaddingLeft - kCSSPaddingRight];
+            cssStr = [cssStr stringByAppendingString:bodyCss];
+        }else{
+            //修改body样式
+            NSString *subStr = [cssStr substringFromIndex:bodyIndex + 4];
+            NSInteger beginIndex = [subStr rangeOfString:@"{"].location;
+            if(beginIndex != NSNotFound){
+                NSInteger endIndex = [subStr rangeOfString:@"}"].location;
+                if(endIndex != NSNotFound){
+                    NSString *bodyCss = [subStr substringWithRange:NSMakeRange(beginIndex + 1, endIndex - 2)];
+                    NSArray *keyValues = [bodyCss componentsSeparatedByString:@";"];
+                    for(NSString *str in keyValues){
+                        
+                    }
+                }
+            }
+        }
+        NSString *bookcontentCss = [NSString stringWithFormat:@"%@ {padding-left: 20px;padding-right: 20px;}", kBookContentDiv];
+        cssStr = [cssStr stringByAppendingString:bookcontentCss];
         //修改body样式
         [cssStr writeToFile:cssPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
         NSLog(@"error=%@", error);

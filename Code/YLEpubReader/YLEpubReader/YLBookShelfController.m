@@ -106,6 +106,7 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 - (void)xmlManager:(YLXMLManager *)manager didFinishParsing:(YLEpub *)epub
 {
     epub.opsPath = _opsPath;
+    [epub modifyCss];
     [_eBooks addObject:epub];
     [SVProgressHUD showSuccessWithStatus:@"解析成功"];
     [SVProgressHUD dismissWithDelay:1];

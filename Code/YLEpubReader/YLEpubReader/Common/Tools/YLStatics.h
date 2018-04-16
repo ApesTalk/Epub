@@ -11,6 +11,8 @@
 
 #define kScreenWidth [UIScreen mainScreen].bounds.size.width
 #define kScreenHeight [UIScreen mainScreen].bounds.size.height
-#define kBookContentDiv @"yl_bookcontent"
+#define kBookContentDiv @".yl_bookcontent"
+#define kCSSPaddingLeft 20
+#define kCSSPaddingRight 20
 
 #endif /* YLStatics_h */
