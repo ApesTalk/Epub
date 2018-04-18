@@ -11,9 +11,12 @@
 #import "YLEpubManager.h"
 #import "YLStatics.h"
 
-@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate>
+@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, assign, readwrite) NSInteger currentColumnIndex;
+@property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
+
 @end
 
 @implementation YLBookContentController
@@ -45,6 +48,12 @@
         _webView.scrollView.tintColor = [UIColor redColor];
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
+        _webView.scrollView.delegate = self;
+        if (@available(iOS 11.0, *)) {
+            _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+        } else {
+            // Fallback on earlier versions
+        }
     }
     return _webView;
 }
@@ -85,7 +94,15 @@
 {
     [webView evaluateJavaScript:@"document.body.scrollWidth"completionHandler:^(id _Nullable result,NSError *_Nullable error) {
         CGFloat width = [result floatValue];
+        _maxColumnIndex = MAX(0, width / kScreenWidth - 1);
         NSLog(@"scrollWidth=%f", width);
     }];
+}
+
+#pragma mark---UIScrollViewDelegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGFloat offsetX = scrollView.contentOffset.x;
+    _currentColumnIndex = offsetX / kScreenWidth;
 }
 @end

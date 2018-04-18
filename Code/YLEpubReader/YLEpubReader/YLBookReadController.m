@@ -47,19 +47,25 @@
 #pragma mark---UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-//    NSInteger index = ((YLBookContentController *)viewController).chapterIndex;
-//    if(index != NSNotFound && index - 1 >= 0){
-//        return [self controllerForIndex:index - 1];
-//    }
+    YLBookContentController *currentChapterVc = (YLBookContentController *)viewController;
+    if(currentChapterVc.currentColumnIndex == 0){
+        NSInteger index = currentChapterVc.chapterIndex;
+        if(index != NSNotFound && index - 1 >= 0){
+            return [self controllerForIndex:index - 1];
+        }
+    }
     return nil;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-//    NSInteger index = ((YLBookContentController *)viewController).chapterIndex;
-//    if(index != NSNotFound && index + 1 < _epub.spine.count){
-//        return [self controllerForIndex:index + 1];
-//    }
+    YLBookContentController *currentChapterVc = (YLBookContentController *)viewController;
+    if(currentChapterVc.currentColumnIndex == currentChapterVc.maxColumnIndex){
+        NSInteger index = currentChapterVc.chapterIndex;
+        if(index != NSNotFound && index + 1 < _epub.spine.count){
+            return [self controllerForIndex:index + 1];
+        }
+    }
     return nil;
 }
 
