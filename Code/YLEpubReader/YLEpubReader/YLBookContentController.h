@@ -10,5 +10,5 @@
 
 @interface YLBookContentController : YLBaseViewController
 @property (nonatomic, assign) NSInteger chapterIndex;///< 章节索引
-- (void)loadHtmlWithPath:(NSString *)path;
+- (instancetype)initWithHtmlPath:(NSString *)path;
 @end

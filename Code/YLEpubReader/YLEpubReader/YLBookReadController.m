@@ -40,7 +40,7 @@
     _pageViewController.delegate = self;
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
-    
+
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
 }
 
@@ -70,12 +70,11 @@
         return nil;
     }
     //create a new vc
-    YLBookContentController *contentVc = [[YLBookContentController alloc]init];
-    contentVc.chapterIndex = index;
     NSString *idref = [_epub.spine objectAtIndex:index];
     NSString *href = [_epub.mainifest objectForKey:idref];
     NSString *htmlPath = [NSString stringWithFormat:@"%@%@", _epub.opsPath, href];
-    [contentVc loadHtmlWithPath:htmlPath];
+    YLBookContentController *contentVc = [[YLBookContentController alloc]initWithHtmlPath:htmlPath];
+    contentVc.chapterIndex = index;
     return contentVc;
 }
 @end

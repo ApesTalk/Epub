@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "YLNavigationController.h"
 #import "YLBookShelfController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -19,8 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    ViewController *vc = [[ViewController alloc]init];
+    
     _window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
     _window.backgroundColor = [UIColor whiteColor];
+//    _window.rootViewController = vc;
     YLBookShelfController *bookShelf = [[YLBookShelfController alloc]init];
     YLNavigationController *nav = [[YLNavigationController alloc]initWithRootViewController:bookShelf];
     _window.rootViewController = nav;
