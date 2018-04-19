@@ -33,20 +33,19 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.view addSubview:self.webView];
-    [self loadHtmlWithPath:_path];
+//    [self loadHtmlWithPath:_path];
 }
 
 - (WKWebView *)webView
 {
     if(!_webView){
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
-        _webView = [[WKWebView alloc]initWithFrame:self.view.bounds configuration:config];
+        _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) configuration:config];
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.scrollView.pagingEnabled = YES;
         _webView.scrollView.showsVerticalScrollIndicator = NO;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
         _webView.scrollView.bounces = NO;
-        _webView.scrollView.tintColor = [UIColor redColor];
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
         _webView.scrollView.delegate = self;
@@ -64,6 +63,10 @@
     if(!path || ![[NSFileManager defaultManager] fileExistsAtPath:path]){
         NSLog(@"chapter.html path not exists");
         return;
+    }
+    _path = path;
+    if(self.webView.isLoading){
+        [self.webView stopLoading];
     }
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSInteger headEndIndex = [htmlStr rangeOfString:@"<head>"].location + 6;
@@ -97,6 +100,10 @@
         _contentWidth = [result floatValue];
         _maxColumnIndex = MAX(0, _contentWidth / kScreenWidth - 1);
         NSLog(@"scrollWidth=%f", _contentWidth);
+        if(_goLastPageWhenFinishLoad){
+            [webView.scrollView setContentOffset:CGPointMake(_maxColumnIndex * kScreenWidth, 0) animated:NO];
+            _goLastPageWhenFinishLoad = NO;
+        }
     }];
 }
 
@@ -104,7 +111,8 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetX = scrollView.contentOffset.x;
+    NSLog(@"offsetX=%f", offsetX);
     _currentColumnIndex = offsetX / kScreenWidth;
-    _webView.userInteractionEnabled = !(offsetX < 0 || offsetX <= _contentWidth - kScreenWidth);
+//    _webView.userInteractionEnabled = !(offsetX <= 0 || offsetX >= _contentWidth - kScreenWidth);
 }
 @end

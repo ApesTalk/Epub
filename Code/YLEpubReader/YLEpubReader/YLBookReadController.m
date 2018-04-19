@@ -9,6 +9,7 @@
 #import "YLBookReadController.h"
 #import "YLBookContentController.h"
 #import "YLEpub.h"
+#import "YLStatics.h"
 
 @interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
@@ -42,7 +43,39 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
 
+    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    leftBtn.backgroundColor = [UIColor redColor];
+    leftBtn.frame = CGRectMake(0, (kScreenHeight - 50) * 0.5, 50, 50);
+    [leftBtn addTarget:self action:@selector(pre) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:leftBtn];
+    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    rightBtn.backgroundColor = [UIColor redColor];
+    rightBtn.frame = CGRectMake(kScreenWidth - 50, (kScreenHeight - 50) * 0.5, 50, 50);
+    [rightBtn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:rightBtn];
+    
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+}
+
+- (void)pre
+{
+    YLBookContentController *currentChapterVc = (YLBookContentController *)_pageViewController.viewControllers[0];
+    NSInteger index = currentChapterVc.chapterIndex;
+    if(index != NSNotFound && index - 1 >= 0){
+        YLBookContentController *preChapterVc = [self controllerForIndex:index - 1];
+        preChapterVc.goLastPageWhenFinishLoad = YES;
+        [_pageViewController setViewControllers:@[preChapterVc] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+    }
+}
+
+- (void)next
+{
+    YLBookContentController *currentChapterVc = (YLBookContentController *)_pageViewController.viewControllers[0];
+    NSInteger index = currentChapterVc.chapterIndex;
+    if(index != NSNotFound && index + 1 < _epub.spine.count){
+        YLBookContentController *nextChapterVC = [self controllerForIndex:index + 1];
+        [_pageViewController setViewControllers:@[nextChapterVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -58,7 +91,9 @@
     if(currentChapterVc.currentColumnIndex == 0){
         NSInteger index = currentChapterVc.chapterIndex;
         if(index != NSNotFound && index - 1 >= 0){
-            return [self controllerForIndex:index - 1];
+            YLBookContentController *preChapterVc = [self controllerForIndex:index - 1];
+            preChapterVc.goLastPageWhenFinishLoad = YES;
+            return preChapterVc;
         }
     }
     return nil;
@@ -77,7 +112,7 @@
 }
 
 #pragma mark---other methods
-- (UIViewController *)controllerForIndex:(NSInteger)index
+- (YLBookContentController *)controllerForIndex:(NSInteger)index
 {
     if(index < 0 || index > _epub.spine.count){
         return nil;
@@ -85,8 +120,11 @@
     //create a new vc
     NSString *idref = [_epub.spine objectAtIndex:index];
     NSString *href = [_epub.mainifest objectForKey:idref];
+    self.title = href;
     NSString *htmlPath = [NSString stringWithFormat:@"%@%@", _epub.opsPath, href];
-    YLBookContentController *contentVc = [[YLBookContentController alloc]initWithHtmlPath:htmlPath];
+//    YLBookContentController *contentVc = [[YLBookContentController alloc]initWithHtmlPath:htmlPath];
+    YLBookContentController *contentVc = [[YLBookContentController alloc]init];
+    [contentVc loadHtmlWithPath:htmlPath];
     contentVc.chapterIndex = index;
     return contentVc;
 }

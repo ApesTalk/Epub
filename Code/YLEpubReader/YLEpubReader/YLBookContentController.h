@@ -12,5 +12,7 @@
 @property (nonatomic, assign) NSInteger chapterIndex;///< 章节索引
 @property (nonatomic, assign, readonly) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readonly) NSInteger maxColumnIndex;
+@property (nonatomic, assign) BOOL goLastPageWhenFinishLoad;
 - (instancetype)initWithHtmlPath:(NSString *)path;
+- (void)loadHtmlWithPath:(NSString *)path;
 @end
