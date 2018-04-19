@@ -14,6 +14,7 @@
 @interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, assign) CGFloat contentWidth;
 @property (nonatomic, assign, readwrite) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
 
@@ -93,9 +94,9 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     [webView evaluateJavaScript:@"document.body.scrollWidth"completionHandler:^(id _Nullable result,NSError *_Nullable error) {
-        CGFloat width = [result floatValue];
-        _maxColumnIndex = MAX(0, width / kScreenWidth - 1);
-        NSLog(@"scrollWidth=%f", width);
+        _contentWidth = [result floatValue];
+        _maxColumnIndex = MAX(0, _contentWidth / kScreenWidth - 1);
+        NSLog(@"scrollWidth=%f", _contentWidth);
     }];
 }
 
@@ -104,5 +105,6 @@
 {
     CGFloat offsetX = scrollView.contentOffset.x;
     _currentColumnIndex = offsetX / kScreenWidth;
+    _webView.userInteractionEnabled = !(offsetX < 0 || offsetX <= _contentWidth - kScreenWidth);
 }
 @end

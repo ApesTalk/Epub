@@ -27,6 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     NSArray *controllers = @[[self controllerForIndex:0]];
     
     //UIPageViewControllerOptionSpineLocationKey 书脊位置
@@ -42,6 +43,12 @@
     [self.view addSubview:_pageViewController.view];
 
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 #pragma mark---UIPageViewControllerDataSource

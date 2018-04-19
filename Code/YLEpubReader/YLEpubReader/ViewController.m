@@ -27,24 +27,26 @@
 //    BOOL b = [YLEpubManager unZipEpubWithPath:filePath delegate:self];
 //    epub.unZipedPath = [YLEpubManager unZipedPathForEpub:epub];
     
-    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-    webView.backgroundColor = [UIColor whiteColor];
-    webView.delegate = self;
-    webView.scrollView.pagingEnabled = YES;
-    webView.scrollView.showsVerticalScrollIndicator = NO;
-    webView.scrollView.showsHorizontalScrollIndicator = NO;
-    webView.scrollView.bounces = NO;
-    webView.scrollView.tintColor = [UIColor redColor];
-    [self.view addSubview:webView];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
-    NSURL *url = [NSURL fileURLWithPath:path];
-    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+//    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+//    webView.backgroundColor = [UIColor whiteColor];
+//    webView.delegate = self;
+//    webView.scrollView.pagingEnabled = YES;
+//    webView.scrollView.showsVerticalScrollIndicator = NO;
+//    webView.scrollView.showsHorizontalScrollIndicator = NO;
+//    webView.scrollView.bounces = NO;
+//    webView.scrollView.tintColor = [UIColor redColor];
+//    [self.view addSubview:webView];
+//    NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
+//    NSURL *url = [NSURL fileURLWithPath:path];
+//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
     
     //测试矢量图
 //    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.width * 48 / 40)];
 //    icon.image = [UIImage imageNamed:@"Image"];
 //    [self.view addSubview:icon];
-    return;
+    
+    
+//    return;
     
     //注意_pageViewController.viewControllers不包含所有它能展示的控制器，不拥有，只会拥有setViewControllers和当前展示的controller
     
