@@ -11,7 +11,7 @@
 #import "YLEpub.h"
 #import "YLStatics.h"
 
-@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
 @end
@@ -43,18 +43,27 @@
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
 
-    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    leftBtn.backgroundColor = [UIColor redColor];
-    leftBtn.frame = CGRectMake(0, (kScreenHeight - 50) * 0.5, 50, 50);
-    [leftBtn addTarget:self action:@selector(pre) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:leftBtn];
-    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    rightBtn.backgroundColor = [UIColor redColor];
-    rightBtn.frame = CGRectMake(kScreenWidth - 50, (kScreenHeight - 50) * 0.5, 50, 50);
-    [rightBtn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:rightBtn];
+//    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    leftBtn.backgroundColor = [UIColor redColor];
+//    leftBtn.frame = CGRectMake(0, (kScreenHeight - 50) * 0.5, 50, 50);
+//    [leftBtn addTarget:self action:@selector(pre) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:leftBtn];
+//    UIButton *rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    rightBtn.backgroundColor = [UIColor redColor];
+//    rightBtn.frame = CGRectMake(kScreenWidth - 50, (kScreenHeight - 50) * 0.5, 50, 50);
+//    [rightBtn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:rightBtn];
     
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    
+    for(UIGestureRecognizer *gesture in _pageViewController.gestureRecognizers){
+        gesture.delegate = self;
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
 }
 
 - (void)pre
@@ -128,4 +137,21 @@
     contentVc.chapterIndex = index;
     return contentVc;
 }
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    YLBookContentController *currentChapterVc = (YLBookContentController *)[_pageViewController viewControllers][0];
+    if(currentChapterVc.currentColumnIndex == 0 || currentChapterVc.currentColumnIndex == currentChapterVc.maxColumnIndex){
+        if([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+            currentChapterVc.view.userInteractionEnabled = NO;
+            return YES;
+        }else{
+            currentChapterVc.view.userInteractionEnabled = YES;
+            return NO;
+        }
+    }
+    currentChapterVc.view.userInteractionEnabled = YES;
+    return NO;
+}
+
 @end

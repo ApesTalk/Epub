@@ -113,6 +113,5 @@
     CGFloat offsetX = scrollView.contentOffset.x;
     NSLog(@"offsetX=%f", offsetX);
     _currentColumnIndex = offsetX / kScreenWidth;
-//    _webView.userInteractionEnabled = !(offsetX <= 0 || offsetX >= _contentWidth - kScreenWidth);
 }
 @end
