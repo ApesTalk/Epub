@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6326EB1B0CBCD4FD82646FE5 /* libPods-YLEpubReaderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F2FA183F137B79791BB807 /* libPods-YLEpubReaderUITests.a */; };
+		6D058CA5208C6DCC00340A49 /* UIView+AOP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D058CA3208C6DCC00340A49 /* UIView+AOP.m */; };
 		6D39040A2071D15B00348EAE /* column.html in Resources */ = {isa = PBXBuildFile; fileRef = 6D3904092071D15B00348EAE /* column.html */; };
 		6D4C1E6F2070E0BE00F897E4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */; };
 		6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E712070E0BE00F897E4 /* ViewController.m */; };
@@ -54,6 +55,8 @@
 		0AB2DE01A6B0ACB9221692A3 /* Pods-YLEpubReaderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReaderTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReaderTests/Pods-YLEpubReaderTests.release.xcconfig"; sourceTree = "<group>"; };
 		4B941FD416176B36F0EB707D /* Pods-YLEpubReaderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReaderUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReaderUITests/Pods-YLEpubReaderUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		60ADB4485AE588B3C7BA0BAD /* Pods-YLEpubReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader.release.xcconfig"; sourceTree = "<group>"; };
+		6D058CA3208C6DCC00340A49 /* UIView+AOP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AOP.m"; sourceTree = "<group>"; };
+		6D058CA4208C6DCC00340A49 /* UIView+AOP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AOP.h"; sourceTree = "<group>"; };
 		6D3904092071D15B00348EAE /* column.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = column.html; sourceTree = "<group>"; };
 		6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YLEpubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -252,6 +255,8 @@
 		6D5D85AA2082373A00D8D902 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				6D058CA4208C6DCC00340A49 /* UIView+AOP.h */,
+				6D058CA3208C6DCC00340A49 /* UIView+AOP.m */,
 				6D5D85AF20823A8900D8D902 /* YLEpubManager.h */,
 				6D5D85B020823A8900D8D902 /* YLEpubManager.m */,
 				6D5D85B52082E52900D8D902 /* YLXMLManager.h */,
@@ -619,6 +624,7 @@
 				6D5D85BE2082F60C00D8D902 /* YLBaseViewController.m in Sources */,
 				6D5D85CB208390EA00D8D902 /* YLBookReadController.m in Sources */,
 				6D5D85CE2083915000D8D902 /* YLBookContentController.m in Sources */,
+				6D058CA5208C6DCC00340A49 /* UIView+AOP.m in Sources */,
 				6D5D85B42082400600D8D902 /* YLEpub.m in Sources */,
 				6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */,
 				6D4C1EA12070E2E000F897E4 /* YLTestViewController.m in Sources */,

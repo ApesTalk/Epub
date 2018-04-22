@@ -22,6 +22,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    UITextView *textView = [[UITextView alloc]initWithFrame:self.view.bounds];
+    textView.font = [UIFont systemFontOfSize:20];
+    textView.textColor = [UIColor blackColor];
+    textView.text = @"陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生";
+    [self.view addSubview:textView];
+    return;
+    
 //    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
 //    YLEpub *epub = [[YLEpub alloc]initWithName:@"陈二狗的妖孽人生" filePath:filePath];
 //    BOOL b = [YLEpubManager unZipEpubWithPath:filePath delegate:self];
