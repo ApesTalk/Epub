@@ -11,12 +11,14 @@
 #import "YLEpubManager.h"
 #import "YLStatics.h"
 
-@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
+@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,CAAnimationDelegate>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, assign) CGFloat contentWidth;
 @property (nonatomic, assign, readwrite) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
+@property (nonatomic, assign, readwrite) YLWebLoadStatus loadStatus;
+@property (nonatomic, strong) UIActivityIndicatorView *indicator;
 
 @end
 
@@ -32,6 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _loadStatus = YLWebLoadStatusIdle;
     [self.view addSubview:self.webView];
 //    [self loadHtmlWithPath:_path];
 }
@@ -56,6 +59,15 @@
         }
     }
     return _webView;
+}
+
+- (UIActivityIndicatorView *)indicator
+{
+    if(!_indicator){
+        _indicator = [[UIActivityIndicatorView alloc]initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _indicator.center = self.view.center;
+    }
+    return _indicator;
 }
 
 - (void)loadHtmlWithPath:(NSString *)path
@@ -86,12 +98,16 @@
 #pragma mark---WKNavigationDelegate
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    
+    _loadStatus = YLWebLoadStatusLoading;
+    [self.view addSubview:self.indicator];
+    [self.indicator startAnimating];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
     NSLog(@"error:%@", error);
+    _loadStatus = YLWebLoadStatusLoadFinish;
+    [self.indicator stopAnimating];
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
@@ -104,6 +120,8 @@
             [webView.scrollView setContentOffset:CGPointMake(_maxColumnIndex * kScreenWidth, 0) animated:NO];
             _goLastPageWhenFinishLoad = NO;
         }
+        _loadStatus = YLWebLoadStatusLoadFinish;
+        [self.indicator stopAnimating];
     }];
 }
 
@@ -111,7 +129,8 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     CGFloat offsetX = scrollView.contentOffset.x;
-    NSLog(@"offsetX=%f", offsetX);
-    _currentColumnIndex = offsetX / kScreenWidth;
+    self.currentColumnIndex = offsetX / kScreenWidth;
+    NSLog(@"_currentColumnIndex=%li", _currentColumnIndex);
 }
+
 @end

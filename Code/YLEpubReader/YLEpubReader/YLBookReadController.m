@@ -56,6 +56,7 @@
     
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
+    //UIPageViewControllerTransitionStyleScroll类型的无手势，UIPageViewControllerTransitionStylePageCurl类型的有pan和tap手势
     for(UIGestureRecognizer *gesture in _pageViewController.gestureRecognizers){
         gesture.delegate = self;
     }
@@ -141,13 +142,25 @@
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     YLBookContentController *currentChapterVc = (YLBookContentController *)[_pageViewController viewControllers][0];
-    if(currentChapterVc.currentColumnIndex == 0 || currentChapterVc.currentColumnIndex == currentChapterVc.maxColumnIndex){
-        if([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]){
+    NSInteger currentIndex = currentChapterVc.currentColumnIndex;
+    NSInteger maxIndex = currentChapterVc.maxColumnIndex;
+    YLWebLoadStatus status = currentChapterVc.loadStatus;
+    if(status != YLWebLoadStatusLoadFinish){
+        currentChapterVc.view.userInteractionEnabled = NO;
+        return NO;
+    }
+    if(currentIndex == 0){
+        //left Reverse
+        if(currentChapterVc.chapterIndex > 0 && [touch locationInView:self.view].x < kScreenWidth * 0.5){
             currentChapterVc.view.userInteractionEnabled = NO;
             return YES;
-        }else{
-            currentChapterVc.view.userInteractionEnabled = YES;
-            return NO;
+        }
+    }
+    if (currentChapterVc.chapterIndex < _epub.spine.count - 1 && currentIndex == maxIndex){
+        //right Forward
+        if([touch locationInView:self.view].x >= kScreenWidth * 0.5){
+            currentChapterVc.view.userInteractionEnabled = NO;
+            return YES;
         }
     }
     currentChapterVc.view.userInteractionEnabled = YES;
