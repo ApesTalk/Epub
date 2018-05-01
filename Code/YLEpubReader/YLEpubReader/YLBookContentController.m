@@ -11,7 +11,7 @@
 #import "YLEpubManager.h"
 #import "YLStatics.h"
 
-@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,CAAnimationDelegate>
+@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, assign) CGFloat contentWidth;
@@ -19,6 +19,8 @@
 @property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
 @property (nonatomic, assign, readwrite) YLWebLoadStatus loadStatus;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
+@property (nonatomic, assign) BOOL barIsShow;
+
 
 @end
 
@@ -34,9 +36,33 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+
     _loadStatus = YLWebLoadStatusIdle;
     [self.view addSubview:self.webView];
 //    [self loadHtmlWithPath:_path];
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    tapGesture.delegate = self;
+    [self.view addGestureRecognizer:tapGesture];
+    
+    for(UIGestureRecognizer *tapGesture in _webView.scrollView.gestureRecognizers){
+        [tapGesture requireGestureRecognizerToFail:tapGesture];
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    _barIsShow = NO;
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
 }
 
 - (WKWebView *)webView
@@ -95,6 +121,11 @@
     [self.webView loadHTMLString:htmlStr baseURL:[NSURL fileURLWithPath:path]];
 }
 
+- (void)scrollToPageIndex:(NSInteger)page
+{
+    [_webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, 0)];
+}
+
 #pragma mark---WKNavigationDelegate
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
@@ -133,4 +164,28 @@
     NSLog(@"_currentColumnIndex=%li", _currentColumnIndex);
 }
 
+#pragma mark---UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
+
+
+#pragma mark---other methods
+- (void)tapAction:(UITapGestureRecognizer *)gesture
+{
+    CGPoint point = [gesture locationInView:self.view];
+    if(point.x >= 30 && point.x <= kScreenWidth - 30){
+        if(_barIsShow){
+            _barIsShow = NO;
+            [[UIApplication sharedApplication]setStatusBarHidden:YES];
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        }else{
+            _barIsShow = YES;
+            [[UIApplication sharedApplication]setStatusBarHidden:NO];
+            [self.navigationController setNavigationBarHidden:NO animated:YES];
+        }
+        [self setNeedsStatusBarAppearanceUpdate];
+    }
+}
 @end

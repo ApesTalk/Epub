@@ -11,9 +11,14 @@
 #import "YLEpub.h"
 #import "YLStatics.h"
 
-@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate>
+static NSString *cellIdentifier = @"cell";
+
+@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
+@property (nonatomic, assign) BOOL spineIsShow;
+@property (nonatomic, strong) UIButton *coverView;
+@property (nonatomic, strong) UITableView *spineTable;
 @end
 
 @implementation YLBookReadController
@@ -28,6 +33,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(checkSpine)];
+    self.navigationItem.rightBarButtonItem = rightBtn;
+    
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     NSArray *controllers = @[[self controllerForIndex:0]];
     
@@ -37,7 +45,7 @@
     //                              UIPageViewControllerOptionInterPageSpacingKey:@(10),
     //                              };
     NSDictionary *options = nil;
-    _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
+    _pageViewController = [[UIPageViewController alloc]initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:options];
     _pageViewController.dataSource = self;
     _pageViewController.delegate = self;
     [self addChildViewController:_pageViewController];
@@ -57,14 +65,22 @@
     [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
     
     //UIPageViewControllerTransitionStyleScroll类型的无手势，UIPageViewControllerTransitionStylePageCurl类型的有pan和tap手势
-    for(UIGestureRecognizer *gesture in _pageViewController.gestureRecognizers){
-        gesture.delegate = self;
+    if(_pageViewController.transitionStyle == UIPageViewControllerTransitionStylePageCurl){
+        for(UIGestureRecognizer *gesture in _pageViewController.gestureRecognizers){
+            gesture.delegate = self;
+        }
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
 - (void)pre
@@ -88,10 +104,37 @@
     }
 }
 
-- (void)viewDidDisappear:(BOOL)animated
+- (UIButton *)coverView
 {
-    [super viewDidDisappear:animated];
-    self.navigationController.interactivePopGestureRecognizer.enabled = YES;
+    if(!_coverView){
+        _coverView = [UIButton buttonWithType:UIButtonTypeCustom];
+        _coverView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.15];
+        _coverView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
+        [_coverView addTarget:self action:@selector(tapCover) forControlEvents:UIControlEventTouchUpInside];
+    }
+    return _coverView;
+}
+
+- (UITableView *)spineTable
+{
+    if(!_spineTable){
+        _spineTable = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth, 0, kScreenWidth * 0.5, kScreenHeight) style:UITableViewStylePlain];
+        [_spineTable registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
+        _spineTable.dataSource = self;
+        _spineTable.delegate = self;
+        UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth * 0.5, kStatusAndNavigationBarHeight)];
+        header.backgroundColor = [UIColor whiteColor];
+        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kStatusBarHeight, kScreenWidth * 0.5, kNavigationBarHeight)];
+        titleLabel.backgroundColor = [UIColor whiteColor];
+        titleLabel.font = [UIFont boldSystemFontOfSize:20];
+        titleLabel.textColor = [UIColor blackColor];
+        titleLabel.textAlignment = NSTextAlignmentCenter;
+        titleLabel.text = @"目录";
+        [header addSubview:titleLabel];
+        _spineTable.tableHeaderView = header;
+        _spineTable.tableFooterView = [UIView new];
+    }
+    return _spineTable;
 }
 
 #pragma mark---UIPageViewControllerDataSource
@@ -121,6 +164,39 @@
     return nil;
 }
 
+#pragma mark---UITableViewDataSource
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return _epub.spine.count;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.textLabel.font = [UIFont systemFontOfSize:16];
+    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController.viewControllers firstObject];
+    NSInteger chaterIndex = currentChapterVc.chapterIndex;
+    cell.textLabel.textColor = indexPath.row == chaterIndex ? self.navigationController.navigationBar.tintColor : [UIColor darkGrayColor];
+    cell.textLabel.text = [_epub.spine objectAtIndex:indexPath.row];
+    return cell;
+}
+
+#pragma mark---UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    YLBookContentController *currentChapterVc = (YLBookContentController *)[[self.pageViewController viewControllers]firstObject];
+    NSInteger index = currentChapterVc.chapterIndex;
+    if(index == indexPath.row){
+        [currentChapterVc scrollToPageIndex:0];
+        return;
+    }
+    YLBookContentController *targetVc = [self controllerForIndex:indexPath.row];
+    UIPageViewControllerNavigationDirection direction = index < indexPath.row ?  UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse;
+    [self.pageViewController setViewControllers:@[targetVc] direction:direction animated:YES completion:nil];
+}
+
 #pragma mark---other methods
 - (YLBookContentController *)controllerForIndex:(NSInteger)index
 {
@@ -136,6 +212,11 @@
     YLBookContentController *contentVc = [[YLBookContentController alloc]init];
     [contentVc loadHtmlWithPath:htmlPath];
     contentVc.chapterIndex = index;
+    
+    if(_spineTable){
+        [_spineTable reloadData];
+    }
+    
     return contentVc;
 }
 
@@ -165,6 +246,38 @@
     }
     currentChapterVc.view.userInteractionEnabled = YES;
     return NO;
+}
+
+- (void)tapCover
+{
+    _spineIsShow = NO;
+    [UIView animateWithDuration:0.25 animations:^{
+        CGRect frame = self.spineTable.frame;
+        frame.origin.x = kScreenWidth;
+        _spineTable.frame = frame;
+    }completion:^(BOOL finished) {
+        [_coverView removeFromSuperview];
+    }];
+}
+
+- (void)checkSpine
+{
+    if(_spineIsShow){
+        [self coverView];
+    }else{
+        [[UIApplication sharedApplication]setStatusBarHidden:YES];
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
+        
+        _spineIsShow = YES;
+        [self.view addSubview:self.coverView];
+        [self.coverView addSubview:self.spineTable];
+        [UIView animateWithDuration:0.25 animations:^{
+            CGRect frame = self.spineTable.frame;
+            frame.origin.x = kScreenWidth * 0.5;
+            _spineTable.frame = frame;
+        }completion:^(BOOL finished) {
+        }];
+    }
 }
 
 @end

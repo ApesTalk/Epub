@@ -22,4 +22,5 @@ typedef NS_ENUM(NSInteger, YLWebLoadStatus) {
 @property (nonatomic, assign) BOOL goLastPageWhenFinishLoad;
 - (instancetype)initWithHtmlPath:(NSString *)path;
 - (void)loadHtmlWithPath:(NSString *)path;
+- (void)scrollToPageIndex:(NSInteger)page;
 @end
