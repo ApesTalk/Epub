@@ -2,8 +2,8 @@
 //  YLBookShelfController.m
 //  YLEpubReader
 //
-//  Created by lumin on 2018/4/15.
-//  Copyright © 2018年 https://github.com/lqcjdx. All rights reserved.
+//  Created by ApesTalk on 2018/4/15.
+//  Copyright © 2018年 https://github.com/ApesTalk. All rights reserved.
 //
 
 #import "YLBookShelfController.h"
@@ -110,7 +110,9 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
     [_eBooks addObject:epub];
     [SVProgressHUD showSuccessWithStatus:@"解析成功"];
     [SVProgressHUD dismissWithDelay:1];
-    [_collectionView reloadData];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_collectionView reloadData];
+    });
 }
 
 - (void)xmlManager:(YLXMLManager *)manager failedParseWithError:(NSError *)error

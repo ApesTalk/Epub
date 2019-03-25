@@ -2,8 +2,8 @@
 //  YLBookContentController.m
 //  YLEpubReader
 //
-//  Created by lumin on 2018/4/15.
-//  Copyright © 2018年 https://github.com/lqcjdx. All rights reserved.
+//  Created by ApesTalk on 2018/4/15.
+//  Copyright © 2018年 https://github.com/ApesTalk. All rights reserved.
 //
 
 #import "YLBookContentController.h"
@@ -159,14 +159,19 @@
 #pragma mark---UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat offsetX = scrollView.contentOffset.x;
-    self.currentColumnIndex = offsetX / kScreenWidth;
-    NSLog(@"_currentColumnIndex=%li", _currentColumnIndex);
+    if(scrollView == _webView.scrollView){
+        CGFloat offsetX = scrollView.contentOffset.x;
+        self.currentColumnIndex = offsetX / kScreenWidth;
+        NSLog(@"_currentColumnIndex=%li", _currentColumnIndex);
+    }
 }
 
 #pragma mark---UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
+    if(otherGestureRecognizer.view != _webView.scrollView){
+        return NO;
+    }
     return YES;
 }
 

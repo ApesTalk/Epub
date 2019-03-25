@@ -2,8 +2,8 @@
 //  YLEpub.h
 //  YLEpubReader
 //
-//  Created by lumin on 2018/4/14.
-//  Copyright © 2018年 https://github.com/lqcjdx. All rights reserved.
+//  Created by ApesTalk on 2018/4/14.
+//  Copyright © 2018年 https://github.com/ApesTalk. All rights reserved.
 //  电子书
 
 #import <Foundation/Foundation.h>

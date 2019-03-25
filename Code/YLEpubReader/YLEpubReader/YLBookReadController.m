@@ -2,23 +2,21 @@
 //  YLBookReadController.m
 //  YLEpubReader
 //
-//  Created by lumin on 2018/4/15.
-//  Copyright © 2018年 https://github.com/lqcjdx. All rights reserved.
+//  Created by ApesTalk on 2018/4/15.
+//  Copyright © 2018年 https://github.com/ApesTalk. All rights reserved.
 //
 
 #import "YLBookReadController.h"
 #import "YLBookContentController.h"
 #import "YLEpub.h"
 #import "YLStatics.h"
+#import "YLCatalogController.h"
 
-static NSString *cellIdentifier = @"cell";
 
-@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
-@property (nonatomic, assign) BOOL spineIsShow;
-@property (nonatomic, strong) UIButton *coverView;
-@property (nonatomic, strong) UITableView *spineTable;
+@property (nonatomic, assign) NSUInteger currentChapterIndex;
 @end
 
 @implementation YLBookReadController
@@ -50,6 +48,7 @@ static NSString *cellIdentifier = @"cell";
     _pageViewController.delegate = self;
     [self addChildViewController:_pageViewController];
     [self.view addSubview:_pageViewController.view];
+    [_pageViewController didMoveToParentViewController:self];
 
 //    UIButton *leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
 //    leftBtn.backgroundColor = [UIColor redColor];
@@ -62,7 +61,8 @@ static NSString *cellIdentifier = @"cell";
 //    [rightBtn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
 //    [self.view addSubview:rightBtn];
     
-    [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+    //UIPageViewController重置数据源animated必须传NO才能清除缓存
+    [_pageViewController setViewControllers:controllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
     //UIPageViewControllerTransitionStyleScroll类型的无手势，UIPageViewControllerTransitionStylePageCurl类型的有pan和tap手势
     if(_pageViewController.transitionStyle == UIPageViewControllerTransitionStylePageCurl){
@@ -104,38 +104,6 @@ static NSString *cellIdentifier = @"cell";
     }
 }
 
-- (UIButton *)coverView
-{
-    if(!_coverView){
-        _coverView = [UIButton buttonWithType:UIButtonTypeCustom];
-        _coverView.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.15];
-        _coverView.frame = CGRectMake(0, 0, kScreenWidth, kScreenHeight);
-        [_coverView addTarget:self action:@selector(tapCover) forControlEvents:UIControlEventTouchUpInside];
-    }
-    return _coverView;
-}
-
-- (UITableView *)spineTable
-{
-    if(!_spineTable){
-        _spineTable = [[UITableView alloc]initWithFrame:CGRectMake(kScreenWidth, 0, kScreenWidth * 0.5, kScreenHeight) style:UITableViewStylePlain];
-        [_spineTable registerClass:[UITableViewCell class] forCellReuseIdentifier:cellIdentifier];
-        _spineTable.dataSource = self;
-        _spineTable.delegate = self;
-        UIView *header = [[UIView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth * 0.5, kStatusAndNavigationBarHeight)];
-        header.backgroundColor = [UIColor whiteColor];
-        UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, kStatusBarHeight, kScreenWidth * 0.5, kNavigationBarHeight)];
-        titleLabel.backgroundColor = [UIColor whiteColor];
-        titleLabel.font = [UIFont boldSystemFontOfSize:20];
-        titleLabel.textColor = [UIColor blackColor];
-        titleLabel.textAlignment = NSTextAlignmentCenter;
-        titleLabel.text = @"目录";
-        [header addSubview:titleLabel];
-        _spineTable.tableHeaderView = header;
-        _spineTable.tableFooterView = [UIView new];
-    }
-    return _spineTable;
-}
 
 #pragma mark---UIPageViewControllerDataSource
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -164,37 +132,17 @@ static NSString *cellIdentifier = @"cell";
     return nil;
 }
 
-#pragma mark---UITableViewDataSource
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray<UIViewController *> *)pendingViewControllers
 {
-    return _epub.spine.count;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.textLabel.font = [UIFont systemFontOfSize:16];
-    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController.viewControllers firstObject];
-    NSInteger chaterIndex = currentChapterVc.chapterIndex;
-    cell.textLabel.textColor = indexPath.row == chaterIndex ? self.navigationController.navigationBar.tintColor : [UIColor darkGrayColor];
-    cell.textLabel.text = [_epub.spine objectAtIndex:indexPath.row];
-    return cell;
-}
-
-#pragma mark---UITableViewDelegate
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    YLBookContentController *currentChapterVc = (YLBookContentController *)[[self.pageViewController viewControllers]firstObject];
-    NSInteger index = currentChapterVc.chapterIndex;
-    if(index == indexPath.row){
-        [currentChapterVc scrollToPageIndex:0];
-        return;
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray<UIViewController *> *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    if(finished){
+        YLBookContentController *vc = (YLBookContentController *)[pageViewController.viewControllers firstObject];
+        _currentChapterIndex = vc.chapterIndex;
     }
-    YLBookContentController *targetVc = [self controllerForIndex:indexPath.row];
-    UIPageViewControllerNavigationDirection direction = index < indexPath.row ?  UIPageViewControllerNavigationDirectionForward : UIPageViewControllerNavigationDirectionReverse;
-    [self.pageViewController setViewControllers:@[targetVc] direction:direction animated:YES completion:nil];
 }
 
 #pragma mark---other methods
@@ -212,10 +160,6 @@ static NSString *cellIdentifier = @"cell";
     YLBookContentController *contentVc = [[YLBookContentController alloc]init];
     [contentVc loadHtmlWithPath:htmlPath];
     contentVc.chapterIndex = index;
-    
-    if(_spineTable){
-        [_spineTable reloadData];
-    }
     
     return contentVc;
 }
@@ -248,36 +192,22 @@ static NSString *cellIdentifier = @"cell";
     return NO;
 }
 
-- (void)tapCover
-{
-    _spineIsShow = NO;
-    [UIView animateWithDuration:0.25 animations:^{
-        CGRect frame = self.spineTable.frame;
-        frame.origin.x = kScreenWidth;
-        _spineTable.frame = frame;
-    }completion:^(BOOL finished) {
-        [_coverView removeFromSuperview];
-    }];
-}
-
 - (void)checkSpine
 {
-    if(_spineIsShow){
-        [self coverView];
-    }else{
-        [[UIApplication sharedApplication]setStatusBarHidden:YES];
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
-        
-        _spineIsShow = YES;
-        [self.view addSubview:self.coverView];
-        [self.coverView addSubview:self.spineTable];
-        [UIView animateWithDuration:0.25 animations:^{
-            CGRect frame = self.spineTable.frame;
-            frame.origin.x = kScreenWidth * 0.5;
-            _spineTable.frame = frame;
-        }completion:^(BOOL finished) {
-        }];
-    }
+    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    [self.navigationController setNavigationBarHidden:YES animated:YES];
+    YLCatalogController *catalogVc = [[YLCatalogController alloc]initWithEpub:_epub currentCatalogIndex:_currentChapterIndex];
+    __weak typeof(self) weakSelf = self;
+    catalogVc.didSelectCatalog = ^(YLEpub *epub, NSUInteger cIndex) {
+        if(weakSelf.currentChapterIndex < cIndex){
+            YLBookContentController *chapterVc = [weakSelf controllerForIndex:cIndex];
+            [weakSelf.pageViewController setViewControllers:@[chapterVc] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
+        }else if (weakSelf.currentChapterIndex > cIndex){
+            YLBookContentController *chapterVc = [weakSelf controllerForIndex:cIndex];
+            [weakSelf.pageViewController setViewControllers:@[chapterVc] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
+        }
+    };
+    [catalogVc showInController:self];
 }
 
 @end
