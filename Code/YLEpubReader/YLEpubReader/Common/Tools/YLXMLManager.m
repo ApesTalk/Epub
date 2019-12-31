@@ -25,9 +25,9 @@ static NSString *package = @"package";
 - (void)parseXMLAtPath:(NSString *)xmlPath
 {
     if(!xmlPath || ![[NSFileManager defaultManager] fileExistsAtPath:xmlPath]){
-        if([_delegate respondsToSelector:@selector(xmlManager:failedParseWithError:)]){
+        if([self.delegate respondsToSelector:@selector(xmlManager:failedParseWithError:)]){
             NSError *error = [[NSError alloc]initWithDomain:NSCocoaErrorDomain code:0 userInfo:@{NSFilePathErrorKey: @"XML路径异常"}];
-            [_delegate xmlManager:self failedParseWithError:error];
+            [self.delegate xmlManager:self failedParseWithError:error];
         }
         return;
     }
@@ -35,10 +35,10 @@ static NSString *package = @"package";
     dispatch_queue_t reentrantAvoidanceQueue = dispatch_queue_create("reentrantAvoidanceQueue", DISPATCH_QUEUE_SERIAL);
     dispatch_async(reentrantAvoidanceQueue, ^{
         NSURL *folderPath = [NSURL fileURLWithPath:xmlPath];
-        _parser = [[NSXMLParser alloc]initWithContentsOfURL:folderPath];
-        _parser.delegate = self;
-        _parser.shouldProcessNamespaces = YES;
-        [_parser parse];
+        self.parser = [[NSXMLParser alloc]initWithContentsOfURL:folderPath];
+        self.parser.delegate = self;
+        self.parser.shouldProcessNamespaces = YES;
+        [self.parser parse];
     });
     dispatch_sync(reentrantAvoidanceQueue, ^{});
 }
@@ -48,37 +48,37 @@ static NSString *package = @"package";
 {
     if([elementName isEqualToString:@"rootfile"]){
         NSString *fullPath = [attributeDict valueForKey:@"full-path"];
-        if([_delegate respondsToSelector:@selector(xmlManager:didFoundFullPath:)]){
-            [_delegate xmlManager:self didFoundFullPath:fullPath];
+        if([self.delegate respondsToSelector:@selector(xmlManager:didFoundFullPath:)]){
+            [self.delegate xmlManager:self didFoundFullPath:fullPath];
         }
-        _parser = nil;
+        self.parser = nil;
     }else if ([elementName isEqualToString:@"package"]){
         //开始解析
-        _epub = [[YLEpub alloc]init];
+        self.epub = [[YLEpub alloc]init];
     }else if ([elementName isEqualToString:@"metadata"]){
         //开始解析元数据
-        _metadata = [NSMutableDictionary dictionary];
+        self.metadata = [NSMutableDictionary dictionary];
     }else if ([qName hasPrefix:@"dc:"]){
         //qName=dc:title时 elementName=title
-        _valueString = [[NSMutableString alloc]init];
+        self.valueString = [[NSMutableString alloc]init];
     }else if ([elementName isEqualToString:@"manifest"]){
-        _manifest = [NSMutableDictionary dictionary];
+        self.manifest = [NSMutableDictionary dictionary];
     }else if ([elementName isEqualToString:@"item"]){
         NSString *key = [attributeDict objectForKey:@"id"];
         NSString *value = [attributeDict objectForKey:@"href"];
-        [_manifest setValue:value forKey:key];
+        [self.manifest setValue:value forKey:key];
     }else if([elementName isEqualToString:@"spine"]){
-        _spine = [NSMutableArray array];
+        self.spine = [NSMutableArray array];
     }else if ([elementName isEqualToString:@"itemref"]){
         NSString *idref = [attributeDict objectForKey:@"idref"];
-        [_spine addObject:idref];
+        [self.spine addObject:idref];
     }
 }
 
 - (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
 {
-    if(_valueString){
-        [_valueString appendString:string];
+    if(self.valueString){
+        [self.valueString appendString:string];
     }
 }
 
@@ -86,29 +86,29 @@ static NSString *package = @"package";
 {
     if([qName hasPrefix:@"dc:"]){
         //qName=dc:title时 elementName=title
-        [_metadata setValue:_valueString forKey:elementName];
+        [self.metadata setValue:self.valueString forKey:elementName];
     }else if ([elementName isEqualToString:@"metadata"]){
         //metadata解析完成
-        [_epub setMetadata:_metadata];
+        [self.epub setMetadata:self.metadata];
     }else if ([elementName isEqualToString:@"manifest"]){
         //manifest解析完成
-        _epub.mainifest = _manifest;
+        self.epub.mainifest = self.manifest;
     }else if ([elementName isEqualToString:@"spine"]){
         //spine解析完成
-        _epub.spine = _spine;
+        self.epub.spine = self.spine;
     }else if ([elementName isEqualToString:@"package"]){
         //全部解析完成
-        if([_delegate respondsToSelector:@selector(xmlManager:didFinishParsing:)]){
-            [_delegate xmlManager:self didFinishParsing:_epub];
+        if([self.delegate respondsToSelector:@selector(xmlManager:didFinishParsing:)]){
+            [self.delegate xmlManager:self didFinishParsing:self.epub];
         }
-        _parser = nil;
+        self.parser = nil;
     }
 }
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
 {
-    if([_delegate respondsToSelector:@selector(xmlManager:failedParseWithError:)]){
-        [_delegate xmlManager:self failedParseWithError:parseError];
+    if([self.delegate respondsToSelector:@selector(xmlManager:failedParseWithError:)]){
+        [self.delegate xmlManager:self failedParseWithError:parseError];
     }
 }
 @end

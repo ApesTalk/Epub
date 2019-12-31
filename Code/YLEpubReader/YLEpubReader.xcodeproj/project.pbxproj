@@ -61,7 +61,7 @@
 		6D261CDB2249187000EA85B4 /* YLCatalogController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCatalogController.h; sourceTree = "<group>"; };
 		6D261CDC2249187000EA85B4 /* YLCatalogController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCatalogController.m; sourceTree = "<group>"; };
 		6D3904092071D15B00348EAE /* column.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = column.html; sourceTree = "<group>"; };
-		6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YLEpubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D4C1E6A2070E0BE00F897E4 /* EpubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EpubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6D4C1E702070E0BE00F897E4 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
@@ -152,7 +152,7 @@
 		6D4C1E6B2070E0BE00F897E4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */,
+				6D4C1E6A2070E0BE00F897E4 /* EpubReader.app */,
 				6D4C1E822070E0BE00F897E4 /* YLEpubReaderTests.xctest */,
 				6D4C1E8D2070E0BE00F897E4 /* YLEpubReaderUITests.xctest */,
 			);
@@ -364,7 +364,7 @@
 			);
 			name = YLEpubReader;
 			productName = YLEpubReader;
-			productReference = 6D4C1E6A2070E0BE00F897E4 /* YLEpubReader.app */;
+			productReference = 6D4C1E6A2070E0BE00F897E4 /* EpubReader.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6D4C1E812070E0BE00F897E4 /* YLEpubReaderTests */ = {
@@ -790,7 +790,7 @@
 				INFOPLIST_FILE = YLEpubReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-ApesTalk.YLEpubReader";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = EpubReader;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -806,7 +806,7 @@
 				INFOPLIST_FILE = YLEpubReader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-ApesTalk.YLEpubReader";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = EpubReader;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
@@ -820,7 +820,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = YLEpubReaderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-ApesTalk.EpubReaderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YLEpubReader.app/YLEpubReader";
@@ -835,7 +835,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = YLEpubReaderTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-ApesTalk.EpubReaderTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YLEpubReader.app/YLEpubReader";
@@ -849,7 +849,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = YLEpubReaderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-Apestalk.EpubReaderUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = YLEpubReader;
@@ -863,7 +863,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = YLEpubReaderUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-lqcjdx.YLEpubReaderUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "https---github.com-Apestalk.EpubReaderUITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = YLEpubReader;

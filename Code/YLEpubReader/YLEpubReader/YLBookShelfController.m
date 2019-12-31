@@ -32,20 +32,22 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 {
     [super viewDidLoad];
     self.title = @"书架";
-    _currentUnZipIndex = 0;
-    _bookNames = [NSMutableArray array];
-    _eBooks = [NSMutableArray array];
+    self.currentUnZipIndex = 0;
+    self.bookNames = [NSMutableArray array];
+    self.eBooks = [NSMutableArray array];
+    
     UICollectionViewFlowLayout *layout = [[UICollectionViewFlowLayout alloc]init];
     layout.itemSize = CGSizeMake([YLBookShelfCell width], [YLBookShelfCell height]);
     layout.sectionInset = UIEdgeInsetsMake(0, 20, 0, 20);
     layout.minimumLineSpacing = 10;
     layout.minimumInteritemSpacing = ([UIScreen mainScreen].bounds.size.width - 3 * [YLBookShelfCell width] - 20 * 2) / 2.0;
-    _collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:layout];
-    _collectionView.backgroundColor = [UIColor whiteColor];
-    [_collectionView registerClass:[YLBookShelfCell class] forCellWithReuseIdentifier:cellIdentifiler];
-    _collectionView.dataSource = self;
-    _collectionView.delegate = self;
-    [self.view addSubview:_collectionView];
+    
+    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:layout];
+    self.collectionView.backgroundColor = [UIColor whiteColor];
+    [self.collectionView registerClass:[YLBookShelfCell class] forCellWithReuseIdentifier:cellIdentifiler];
+    self.collectionView.dataSource = self;
+    self.collectionView.delegate = self;
+    [self.view addSubview:self.collectionView];
     
     [self readEpubs];
 }
@@ -62,20 +64,20 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 #pragma mark---UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return _eBooks.count;
+    return self.eBooks.count;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     YLBookShelfCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifiler forIndexPath:indexPath];
-    [cell loadWithEpub:[_eBooks objectAtIndex:indexPath.row]];
+    [cell loadWithEpub:[self.eBooks objectAtIndex:indexPath.row]];
     return cell;
 }
 
 #pragma mark---UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    YLEpub *epub = [_eBooks objectAtIndex:indexPath.row];
+    YLEpub *epub = [self.eBooks objectAtIndex:indexPath.row];
     YLBookReadController *readVc = [[YLBookReadController alloc]initWithEpub:epub];
     [self.navigationController pushViewController:readVc animated:YES];
 }
@@ -88,7 +90,7 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
     if(loaded == total){
         //解压完成，解析container.xml
         [SVProgressHUD showWithStatus:@"解析中"];
-        NSString *name = [_bookNames objectAtIndex:_currentUnZipIndex];
+        NSString *name = [_bookNames objectAtIndex:self.currentUnZipIndex];
         [self.xmlManager parseXMLAtPath:[YLEpubManager contaierXmlPathForEpubName:name]];
     }
 }
@@ -96,22 +98,22 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 #pragma mark---YLXMLManagerDelegate
 - (void)xmlManager:(YLXMLManager *)manager didFoundFullPath:(NSString *)fullPath
 {
-    NSString *name = [_bookNames objectAtIndex:_currentUnZipIndex];
+    NSString *name = [self.bookNames objectAtIndex:self.currentUnZipIndex];
     NSString *unZipedFolderPath = [YLEpubManager unZipedFolderPathForEpubName:name];
-    _opsPath = [NSString stringWithFormat:@"%@/%@", unZipedFolderPath, [fullPath stringByReplacingOccurrencesOfString:[fullPath lastPathComponent] withString:@""]];
+    self.opsPath = [NSString stringWithFormat:@"%@/%@", unZipedFolderPath, [fullPath stringByReplacingOccurrencesOfString:[fullPath lastPathComponent] withString:@""]];
     NSString *opfPath = [NSString stringWithFormat:@"%@/%@", unZipedFolderPath, fullPath];
     [self.xmlManager parseXMLAtPath:opfPath];
 }
 
 - (void)xmlManager:(YLXMLManager *)manager didFinishParsing:(YLEpub *)epub
 {
-    epub.opsPath = _opsPath;
+    epub.opsPath = self.opsPath;
     [epub modifyCss];
-    [_eBooks addObject:epub];
+    [self.eBooks addObject:epub];
     [SVProgressHUD showSuccessWithStatus:@"解析成功"];
     [SVProgressHUD dismissWithDelay:1];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_collectionView reloadData];
+        [self.collectionView reloadData];
     });
 }
 
@@ -126,7 +128,7 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 - (void)readEpubs
 {
     [SVProgressHUD showProgress:0.0 status:@"加载中"];
-    [_bookNames addObject:@"陈二狗的妖孽人生"];
+    [self.bookNames addObject:@"陈二狗的妖孽人生"];
     NSString *path = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
     [YLEpubManager unZipEpubWithPath:path delegate:self];
 }

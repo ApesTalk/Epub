@@ -8,19 +8,20 @@
 
 #import "YLBaseViewController.h"
 
-typedef NS_ENUM(NSInteger, YLWebLoadStatus) {
-    YLWebLoadStatusIdle,///< 闲置状态
-    YLWebLoadStatusLoading,///< 加载中
-    YLWebLoadStatusLoadFinish,///< 加载完成，成功或失败
+typedef NS_ENUM(NSInteger, ChapterLoadStatus) {
+    ChapterLoadStatusIdle,///< 闲置状态
+    ChapterLoadStatusLoading,///< 加载中
+    ChapterLoadStatusSuccess,///< 加载完成 -> 成功
+    ChapterLoadStatusError,///< 加载完成 -> 失败
 };
 
 @interface YLBookContentController : YLBaseViewController
 @property (nonatomic, assign) NSInteger chapterIndex;///< 章节索引
 @property (nonatomic, assign, readonly) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readonly) NSInteger maxColumnIndex;
-@property (nonatomic, assign, readonly) YLWebLoadStatus loadStatus;
+@property (nonatomic, assign, readonly) ChapterLoadStatus loadStatus;
 @property (nonatomic, assign) BOOL goLastPageWhenFinishLoad;
-- (instancetype)initWithHtmlPath:(NSString *)path;
-- (void)loadHtmlWithPath:(NSString *)path;
+- (instancetype)initWithHtmlPath:(NSString *)path title:(NSString *)title;
+//- (void)loadHtmlWithPath:(NSString *)path;
 - (void)scrollToPageIndex:(NSInteger)page;
 @end

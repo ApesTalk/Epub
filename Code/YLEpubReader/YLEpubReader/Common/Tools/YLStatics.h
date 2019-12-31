@@ -21,4 +21,9 @@
 #define kCSSPaddingLeft 20
 #define kCSSPaddingRight 20
 
+#define kEpubViewBottomGap (ISIPHONEX ? 0 : 20)
+
+#define kEpubViewWidth kScreenWidth
+#define kEpubViewHeight (kScreenHeight - kStatusAndNavigationBarHeight - kHomeIndicatorHeight - kEpubViewBottomGap)
+
 #endif /* YLStatics_h */

@@ -13,11 +13,16 @@
 
 @interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
 @property (nonatomic, copy) NSString *path;
+@property (nonatomic, copy) NSString *chapterTitle;
+
+@property (nonatomic, strong) UILabel *chapterTitleLabel;
 @property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, strong) UILabel *indexsLabel;
+
 @property (nonatomic, assign) CGFloat contentWidth;
 @property (nonatomic, assign, readwrite) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
-@property (nonatomic, assign, readwrite) YLWebLoadStatus loadStatus;
+@property (nonatomic, assign, readwrite) ChapterLoadStatus loadStatus;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
 @property (nonatomic, assign) BOOL barIsShow;
 
@@ -25,10 +30,12 @@
 @end
 
 @implementation YLBookContentController
-- (instancetype)initWithHtmlPath:(NSString *)path
+- (instancetype)initWithHtmlPath:(NSString *)path title:(NSString *)title
 {
     if(self = [super init]){
-        _path = path;
+        self.loadStatus = ChapterLoadStatusIdle;
+        self.path = path;
+        self.chapterTitle = title;
     }
     return self;
 }
@@ -36,48 +43,66 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
-    _loadStatus = YLWebLoadStatusIdle;
+    
+    [self.view addSubview:self.chapterTitleLabel];
     [self.view addSubview:self.webView];
-//    [self loadHtmlWithPath:_path];
+    [self.view addSubview:self.indexsLabel];
+    
+    self.chapterTitleLabel.text = self.chapterTitle;
+    
+    [self loadHtmlWithPath:self.path];
     
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
     tapGesture.delegate = self;
-    [self.view addGestureRecognizer:tapGesture];
-    
-    for(UIGestureRecognizer *tapGesture in _webView.scrollView.gestureRecognizers){
-        [tapGesture requireGestureRecognizerToFail:tapGesture];
-    }
+    [self.webView addGestureRecognizer:tapGesture];
+
+//    for(UIGestureRecognizer *gesture in self.webView.scrollView.gestureRecognizers){
+//        if(gesture != tapGesture){
+//            [gesture requireGestureRecognizerToFail:tapGesture];
+//        }
+//    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    _barIsShow = NO;
-    [self.navigationController setNavigationBarHidden:YES animated:YES];
-    [[UIApplication sharedApplication]setStatusBarHidden:YES];
+    self.barIsShow = NO;
+//    [self.navigationController setNavigationBarHidden:YES animated:YES];
+//    [[UIApplication sharedApplication]setStatusBarHidden:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+}
+
+- (UILabel *)chapterTitleLabel
+{
+    if(!_chapterTitleLabel){
+        _chapterTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(kCSSPaddingLeft, kStatusBarHeight, kEpubViewWidth - kCSSPaddingLeft - kCSSPaddingRight, kNavigationBarHeight)];
+        _chapterTitleLabel.backgroundColor = [UIColor whiteColor];
+        _chapterTitleLabel.font = [UIFont boldSystemFontOfSize:20];
+        _chapterTitleLabel.textColor = [UIColor blackColor];
+        _chapterTitleLabel.textAlignment = NSTextAlignmentCenter;
+    }
+    return _chapterTitleLabel;
 }
 
 - (WKWebView *)webView
 {
     if(!_webView){
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
-        _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, 0, kScreenWidth, kScreenHeight) configuration:config];
+        _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, kStatusAndNavigationBarHeight, kEpubViewWidth, kEpubViewHeight) configuration:config];
         _webView.backgroundColor = [UIColor whiteColor];
         _webView.scrollView.pagingEnabled = YES;
         _webView.scrollView.showsVerticalScrollIndicator = NO;
         _webView.scrollView.showsHorizontalScrollIndicator = NO;
-        _webView.scrollView.bounces = NO;
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
         _webView.scrollView.delegate = self;
+        _webView.scrollView.scrollEnabled = NO;
         if (@available(iOS 11.0, *)) {
             _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
@@ -86,6 +111,19 @@
     }
     return _webView;
 }
+
+- (UILabel *)indexsLabel
+{
+    if(!_indexsLabel){
+        _indexsLabel = [[UILabel alloc]initWithFrame:CGRectMake(kCSSPaddingLeft, kScreenHeight -kHomeIndicatorHeight - kEpubViewBottomGap, kScreenWidth - kCSSPaddingLeft - kCSSPaddingRight, 20)];
+        _indexsLabel.backgroundColor = [UIColor whiteColor];
+        _indexsLabel.font = [UIFont systemFontOfSize:14];
+        _indexsLabel.textColor = [UIColor lightGrayColor];
+        _indexsLabel.textAlignment = NSTextAlignmentRight;
+    }
+    return _indexsLabel;
+}
+
 
 - (UIActivityIndicatorView *)indicator
 {
@@ -96,40 +134,63 @@
     return _indicator;
 }
 
+
+- (void)setCurrentColumnIndex:(NSInteger)currentColumnIndex
+{
+    _currentColumnIndex = currentColumnIndex;
+    if(self.maxColumnIndex < 0) {
+        self.indexsLabel.text = nil;
+    } else {
+        self.indexsLabel.text = [NSString stringWithFormat:@"%ld/%ld", self.currentColumnIndex + 1, self.maxColumnIndex + 1];
+    }
+}
+
 - (void)loadHtmlWithPath:(NSString *)path
 {
     if(!path || ![[NSFileManager defaultManager] fileExistsAtPath:path]){
         NSLog(@"chapter.html path not exists");
         return;
     }
-    _path = path;
+    
+    self.path = path;
+    
     if(self.webView.isLoading){
         [self.webView stopLoading];
     }
+    
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    NSInteger headEndIndex = [htmlStr rangeOfString:@"<head>"].location + 6;
-    [htmlStr insertString:@"<meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0,user-scalable=no' />" atIndex:headEndIndex];
-    NSInteger bodyStartIndex = [htmlStr rangeOfString:@"<body>"].location;
-    if(bodyStartIndex != NSNotFound){
-        [htmlStr insertString:[NSString stringWithFormat:@"<div class='%@'>", kBookContentDiv] atIndex:bodyStartIndex + 6];
+    NSRange headRange = [htmlStr rangeOfString:@"<head>"];
+    if(headRange.location != NSNotFound) {
+        NSInteger headEndIndex = headRange.location + headRange.length;
+        [htmlStr insertString:@"<meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0,user-scalable=no' />" atIndex:headEndIndex];
+
     }
+    
+    NSRange bodyRange = [htmlStr rangeOfString:@"<body>"];
+    if(bodyRange.location != NSNotFound){
+        NSInteger bodyBeginIndex = bodyRange.location + bodyRange.length;
+        [htmlStr insertString:[NSString stringWithFormat:@"<div class='%@'>", kBookContentDiv] atIndex:bodyBeginIndex];
+    }
+   
     NSInteger bodyEndIndex = [htmlStr rangeOfString:@"</body>"].location;
     if(bodyEndIndex != NSNotFound){
         [htmlStr insertString:@"</div>" atIndex:bodyEndIndex];
     }
+    
     NSLog(@"html:%@", htmlStr);
     [self.webView loadHTMLString:htmlStr baseURL:[NSURL fileURLWithPath:path]];
 }
 
 - (void)scrollToPageIndex:(NSInteger)page
 {
-    [_webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, 0)];
+    self.currentColumnIndex = page;
+    [self.webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, self.webView.scrollView.contentOffset.y)];
 }
 
 #pragma mark---WKNavigationDelegate
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
-    _loadStatus = YLWebLoadStatusLoading;
+    self.loadStatus = ChapterLoadStatusLoading;
     [self.view addSubview:self.indicator];
     [self.indicator startAnimating];
 }
@@ -137,21 +198,30 @@
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
 {
     NSLog(@"error:%@", error);
-    _loadStatus = YLWebLoadStatusLoadFinish;
+    self.loadStatus = ChapterLoadStatusError;
     [self.indicator stopAnimating];
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    [webView evaluateJavaScript:@"document.body.scrollWidth"completionHandler:^(id _Nullable result,NSError *_Nullable error) {
-        _contentWidth = [result floatValue];
-        _maxColumnIndex = MAX(0, _contentWidth / kScreenWidth - 1);
+    //iOS13适配
+    NSString *js = @"document.body.scrollWidth";
+    if(@available(iOS 13.0,*)){
+        js = @"document.documentElement.scrollWidth";
+    }
+    
+    [webView evaluateJavaScript:js completionHandler:^(id _Nullable result,NSError *_Nullable error) {
+        self.contentWidth = [result floatValue];
+        NSInteger totalPages = _contentWidth / kScreenWidth;
+        self.maxColumnIndex = MAX(0, totalPages - 1);
         NSLog(@"scrollWidth=%f", _contentWidth);
-        if(_goLastPageWhenFinishLoad){
-            [webView.scrollView setContentOffset:CGPointMake(_maxColumnIndex * kScreenWidth, 0) animated:NO];
-            _goLastPageWhenFinishLoad = NO;
+        if(self.goLastPageWhenFinishLoad){
+            [self scrollToPageIndex:self.maxColumnIndex];
+            self.goLastPageWhenFinishLoad = NO;
+        }else{
+            [self scrollToPageIndex:0];
         }
-        _loadStatus = YLWebLoadStatusLoadFinish;
+        self.loadStatus = ChapterLoadStatusSuccess;
         [self.indicator stopAnimating];
     }];
 }
@@ -159,19 +229,16 @@
 #pragma mark---UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if(scrollView == _webView.scrollView){
+    if(scrollView == self.webView.scrollView){
         CGFloat offsetX = scrollView.contentOffset.x;
         self.currentColumnIndex = offsetX / kScreenWidth;
-        NSLog(@"_currentColumnIndex=%li", _currentColumnIndex);
+        NSLog(@"_currentColumnIndex=%li", self.currentColumnIndex);
     }
 }
 
 #pragma mark---UIGestureRecognizerDelegate
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    if(otherGestureRecognizer.view != _webView.scrollView){
-        return NO;
-    }
     return YES;
 }
 
@@ -179,18 +246,27 @@
 #pragma mark---other methods
 - (void)tapAction:(UITapGestureRecognizer *)gesture
 {
-    CGPoint point = [gesture locationInView:self.view];
-    if(point.x >= 30 && point.x <= kScreenWidth - 30){
-        if(_barIsShow){
-            _barIsShow = NO;
-            [[UIApplication sharedApplication]setStatusBarHidden:YES];
-            [self.navigationController setNavigationBarHidden:YES animated:YES];
-        }else{
-            _barIsShow = YES;
-            [[UIApplication sharedApplication]setStatusBarHidden:NO];
-            [self.navigationController setNavigationBarHidden:NO animated:YES];
-        }
-        [self setNeedsStatusBarAppearanceUpdate];
+    if(self.navigationController.isNavigationBarHidden){
+        [self.navigationController setNavigationBarHidden:NO];
+    }else{
+        [self.navigationController setNavigationBarHidden:YES];
     }
 }
+
+//- (void)tapAction:(UITapGestureRecognizer *)gesture
+//{
+//    CGPoint point = [gesture locationInView:self.view];
+//    if(point.x >= 30 && point.x <= kScreenWidth - 30){
+//        if(self.barIsShow){
+//            self.barIsShow = NO;
+//            [[UIApplication sharedApplication]setStatusBarHidden:YES];
+////            [self.navigationController setNavigationBarHidden:YES animated:YES];
+//        }else{
+//            self.barIsShow = YES;
+//            [[UIApplication sharedApplication]setStatusBarHidden:NO];
+////            [self.navigationController setNavigationBarHidden:NO animated:YES];
+//        }
+//        [self setNeedsStatusBarAppearanceUpdate];
+//    }
+//}
 @end

@@ -15,8 +15,8 @@
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path
 {
     if(self = [super init]){
-        _name = name;
-        _filePath = path;
+        self.name = name;
+        self.filePath = path;
     }
     return self;
 }
@@ -26,48 +26,48 @@
     for(NSString *key in metadata.allKeys){
         NSString *value = [metadata valueForKey:key];
         if([key isEqualToString:@"title"]){
-            _title = value;
+            self.title = value;
         }else if ([key isEqualToString:@"identifier"]){
-            _identifier = value;
+            self.identifier = value;
         }else if([key isEqualToString:@"language"]){
-            _language = value;
+            self.language = value;
         }else if ([key isEqualToString:@"creator"]){
-            _creator = value;
+            self.creator = value;
         }else if([key isEqualToString:@"publisher"]){
-            _publisher = value;
+            self.publisher = value;
         }else if ([key isEqualToString:@"description"]){
-            _descript = value;
+            self.descript = value;
         }else if([key isEqualToString:@"coverage"]){
-            _coverage = value;
+            self.coverage = value;
         }else if ([key isEqualToString:@"source"]){
-            _source = value;
+            self.source = value;
         }else if([key isEqualToString:@"date"]){
-            _date = value;
+            self.date = value;
         }else if ([key isEqualToString:@"rights"]){
-            _rights = value;
+            self.rights = value;
         }else if([key isEqualToString:@"subject"]){
-            _subject = value;
+            self.subject = value;
         }else if ([key isEqualToString:@"contributor"]){
-            _contributor = value;
+            self.contributor = value;
         }else if([key isEqualToString:@"type"]){
-            _type = value;
+            self.type = value;
         }else if ([key isEqualToString:@"format"]){
-            _format = value;
+            self.format = value;
         }else if([key isEqualToString:@"relation"]){
-            _relation = value;
+            self.relation = value;
         }else if ([key isEqualToString:@"builder"]){
-            _builder = value;
+            self.builder = value;
         }else if([key isEqualToString:@"builder_version"]){
-            _builderVersion = value;
+            self.builderVersion = value;
         }
     }
 }
 
 - (NSString *)coverPath
 {
-    NSString *coverImage = [_mainifest objectForKey:@"cover-image"];
-    if(coverImage && _opsPath){
-        NSString *path = [NSString stringWithFormat:@"%@%@", _opsPath, coverImage];
+    NSString *coverImage = [self.mainifest objectForKey:@"cover-image"];
+    if(coverImage && self.opsPath){
+        NSString *path = [NSString stringWithFormat:@"%@%@", self.opsPath, coverImage];
         return path;
     }
     return nil;
@@ -76,18 +76,19 @@
 - (void)modifyCss
 {
     //修改body样式，添加bookcontent样式
-    if(_opsPath && _mainifest && [_mainifest objectForKey:@"css"]){
-        NSString *cssPath = [NSString stringWithFormat:@"%@%@", _opsPath, [_mainifest objectForKey:@"css"]];
+    if(self.opsPath && self.mainifest && [self.mainifest objectForKey:@"css"]){
+        NSString *cssPath = [NSString stringWithFormat:@"%@%@", self.opsPath, [self.mainifest objectForKey:@"css"]];
         NSError *error;
         NSString *cssStr = [[NSString alloc]initWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:&error];
         if(error || [cssStr containsString:kBookContentDiv]){
+            NSLog(@"cssStr=%@", cssStr);
             return;
         }
         NSInteger bodyIndex = [cssStr rangeOfString:@"body"].location;
         NSString *marigin = @"margin:0px";
-        NSString *width = [NSString stringWithFormat:@"width:%.0fpx", kScreenWidth];
-        NSString *height = [NSString stringWithFormat:@"height:%.0fpx", kScreenHeight];
-        NSString *columnWidth = [NSString stringWithFormat:@"column-width:%.0fpx", kScreenWidth - kCSSPaddingLeft - kCSSPaddingRight];
+        NSString *width = [NSString stringWithFormat:@"width:%.0fpx", kEpubViewWidth];
+        NSString *height = [NSString stringWithFormat:@"height:%.0fpx", kEpubViewHeight];
+        NSString *columnWidth = [NSString stringWithFormat:@"column-width:%.0fpx", kEpubViewWidth - kCSSPaddingLeft - kCSSPaddingRight];
         NSString *columnGap = @"column-gap:0px";
         NSString *textAlign = @"text-align:justify";
         NSString *wordBreak = @"word-wrap:break-word";
@@ -121,22 +122,23 @@
                     NSString *joinedStr = [newCssKeyValues componentsJoinedByString:@";\n"];
                     NSString *newBodyCss = [NSString stringWithFormat:@"\n%@;\n", joinedStr];
                     cssStr = [cssStr stringByReplacingCharactersInRange:bodyCssRange withString:newBodyCss];
-                    NSLog(@"");
                 }
             }
         }
-        //设置div样式以及图片样式（不跨栏展示）
+        //设置封面全屏
+//        NSString *cover = [NSString stringWithFormat:@".cover,cover {\n height:100%%; padding-left:-%dpx; padding-right:-%dpx; \n}\n", 2*kCSSPaddingLeft,2*kCSSPaddingRight];//
+        //设置div样式以及图片样式（不跨栏展示）.cover,cover,
         NSString *bookContent = [NSString stringWithFormat:@".%@ {\n"
                                                                     "padding-left: %dpx;\n"
                                                                     "padding-right: %dpx;\n"
-                                                                    "img,.cover,cover,h1,h2,h3,h4,h5,h6{\n"
+                                                                    "img,h1,h2,h3,h4,h5,h6{\n"
                                                                             "display: block;\n"
                                                                             "column-span: 1;\n"
                                                                             "width: auto;\n"
                                                                             "height: auto;\n"
                                                                             "max-width: %.0fpx;\n"
                                                                             "max-height: %.0fpx;\n"
-                                                                "}\n", kBookContentDiv, kCSSPaddingLeft, kCSSPaddingRight,kScreenWidth,kScreenHeight];
+                                                                "}}\n", kBookContentDiv, kCSSPaddingLeft, kCSSPaddingRight, kEpubViewWidth, kEpubViewHeight];
         NSString *img = [NSString stringWithFormat:@".%@ img {\n"
                                                                 "display: block;\n"
                                                                 "column-span: 1;\n"
@@ -144,11 +146,14 @@
                                                                 "height: auto;\n"
                                                                 "max-width: %.0fpx;\n"
                                                                 "max-height: %.0fpx;\n"
-                                                            "}\n", kBookContentDiv, kScreenWidth, kScreenHeight];
+                                                            "}\n", kBookContentDiv, kEpubViewWidth, kEpubViewHeight];
+        
+//        cssStr = [cssStr stringByAppendingString:cover];
         cssStr = [cssStr stringByAppendingString:bookContent];
 //        cssStr = [cssStr stringByAppendingString:img];
         //修改body样式
         [cssStr writeToFile:cssPath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+        NSLog(@"cssStr=%@", cssStr);
         NSLog(@"error=%@", error);
     }
 }
