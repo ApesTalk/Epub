@@ -63,7 +63,7 @@
     preBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [preBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [preBtn setTitle:@"<" forState:UIControlStateNormal];
-    [preBtn addTarget:self action:@selector(pre) forControlEvents:UIControlEventTouchUpInside];
+    [preBtn addTarget:self action:@selector(preAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:preBtn];
     
     UIButton *nextBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -72,7 +72,7 @@
     nextBtn.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [nextBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [nextBtn setTitle:@">" forState:UIControlStateNormal];
-    [nextBtn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+    [nextBtn addTarget:self action:@selector(nextAction) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:nextBtn];
     
     //UIPageViewController重置数据源animated必须传NO才能清除缓存
@@ -84,6 +84,21 @@
 //            gesture.delegate = self;
 //        }
 //    }
+    
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    tapGesture.delegate = self;
+    [self.view addGestureRecognizer:tapGesture];
+    
+    UISwipeGestureRecognizer *preSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(preSwipeAction:)];
+    preSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+    preSwipe.delegate = self;
+    [self.view addGestureRecognizer:preSwipe];
+    
+    UISwipeGestureRecognizer *nextSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(nextSwipeAction:)];
+    nextSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+    nextSwipe.delegate = self;
+    [self.view addGestureRecognizer:nextSwipe];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -99,7 +114,7 @@
     self.navigationController.interactivePopGestureRecognizer.enabled = YES;
 }
 
-- (void)pre
+- (void)preAction
 {
     [self.navigationController setNavigationBarHidden:YES];
 
@@ -121,7 +136,7 @@
     }
 }
 
-- (void)next
+- (void)nextAction
 {
     [self.navigationController setNavigationBarHidden:YES];
     
@@ -197,10 +212,6 @@
         return nil;
     }
     
-    //old
-    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController viewControllers].firstObject;
-    [currentChapterVc removeObserver:self forKeyPath:@"loadStatus"];
-    
     //create a new vc
     NSString *idref = [self.epub.spine objectAtIndex:index];
     NSString *href = [self.epub.mainifest objectForKey:idref];
@@ -212,33 +223,69 @@
     return contentVc;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
 {
-    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController viewControllers].firstObject;
-    NSInteger currentIndex = currentChapterVc.currentColumnIndex;
-    NSInteger maxIndex = currentChapterVc.maxColumnIndex;
-    ChapterLoadStatus status = currentChapterVc.loadStatus;
-    if(status != ChapterLoadStatusSuccess || status != ChapterLoadStatusError){
-        currentChapterVc.view.userInteractionEnabled = NO;
-        return NO;
-    }
-    if(currentIndex == 0){
-        //left Reverse
-        if(currentChapterVc.chapterIndex > 0 && [touch locationInView:self.view].x < kScreenWidth * 0.5){
-            currentChapterVc.view.userInteractionEnabled = NO;
-            return YES;
-        }
-    }
-    if (currentChapterVc.chapterIndex < self.epub.spine.count - 1 && currentIndex == maxIndex){
-        //right Forward
-        if([touch locationInView:self.view].x >= kScreenWidth * 0.5){
-            currentChapterVc.view.userInteractionEnabled = NO;
-            return YES;
-        }
-    }
-    currentChapterVc.view.userInteractionEnabled = YES;
-    return NO;
+    return YES;
 }
+
+- (void)tapAction:(UITapGestureRecognizer *)gesture
+{
+    gesture.enabled = NO;
+    
+    CGPoint point = [gesture locationInView:self.view];
+    CGRect preRect = CGRectMake(0, kStatusAndNavigationBarHeight, kCSSPaddingLeft, kEpubViewHeight);
+    CGRect nextRect = CGRectMake(kEpubViewWidth - kCSSPaddingRight, kStatusAndNavigationBarHeight, kCSSPaddingRight, kEpubViewHeight);
+    if(CGRectContainsPoint(preRect, point)){
+        [self preAction];
+    }else if (CGRectContainsPoint(nextRect, point)){
+        [self nextAction];
+    }else {
+        [self.navigationController setNavigationBarHidden:!self.navigationController.isNavigationBarHidden];
+    }
+    gesture.enabled = YES;
+}
+
+- (void)preSwipeAction:(UISwipeGestureRecognizer *)gesture
+{
+    gesture.enabled = NO;
+    [self preAction];
+    gesture.enabled = YES;
+}
+
+- (void)nextSwipeAction:(UISwipeGestureRecognizer *)gesture
+{
+    gesture.enabled = NO;
+    [self nextAction];
+    gesture.enabled = YES;
+}
+
+//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+//{
+//    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController viewControllers].firstObject;
+//    NSInteger currentIndex = currentChapterVc.currentColumnIndex;
+//    NSInteger maxIndex = currentChapterVc.maxColumnIndex;
+//    ChapterLoadStatus status = currentChapterVc.loadStatus;
+//    if(status != ChapterLoadStatusSuccess || status != ChapterLoadStatusError){
+//        currentChapterVc.view.userInteractionEnabled = NO;
+//        return NO;
+//    }
+//    if(currentIndex == 0){
+//        //left Reverse
+//        if(currentChapterVc.chapterIndex > 0 && [touch locationInView:self.view].x < kScreenWidth * 0.5){
+//            currentChapterVc.view.userInteractionEnabled = NO;
+//            return YES;
+//        }
+//    }
+//    if (currentChapterVc.chapterIndex < self.epub.spine.count - 1 && currentIndex == maxIndex){
+//        //right Forward
+//        if([touch locationInView:self.view].x >= kScreenWidth * 0.5){
+//            currentChapterVc.view.userInteractionEnabled = NO;
+//            return YES;
+//        }
+//    }
+//    currentChapterVc.view.userInteractionEnabled = YES;
+//    return NO;
+//}
 
 - (void)checkSpine
 {
@@ -261,7 +308,6 @@
 
 - (void)dealloc
 {
-    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController viewControllers].firstObject;
-    [currentChapterVc removeObserver:self forKeyPath:@"loadStatus"];
+    
 }
 @end

@@ -52,9 +52,9 @@
     
     [self loadHtmlWithPath:self.path];
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-    tapGesture.delegate = self;
-    [self.webView addGestureRecognizer:tapGesture];
+//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+//    tapGesture.delegate = self;
+//    [self.webView addGestureRecognizer:tapGesture];
 
 //    for(UIGestureRecognizer *gesture in self.webView.scrollView.gestureRecognizers){
 //        if(gesture != tapGesture){
@@ -183,8 +183,13 @@
 
 - (void)scrollToPageIndex:(NSInteger)page
 {
+    [self changeToPage:page animated:YES];
+}
+
+- (void)changeToPage:(NSInteger)page animated:(BOOL)animated
+{
     self.currentColumnIndex = page;
-    [self.webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, self.webView.scrollView.contentOffset.y)];
+    [self.webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, self.webView.scrollView.contentOffset.y) animated:animated];
 }
 
 #pragma mark---WKNavigationDelegate
@@ -216,10 +221,10 @@
         self.maxColumnIndex = MAX(0, totalPages - 1);
         NSLog(@"scrollWidth=%f", _contentWidth);
         if(self.goLastPageWhenFinishLoad){
-            [self scrollToPageIndex:self.maxColumnIndex];
+            [self changeToPage:self.maxColumnIndex animated:NO];
             self.goLastPageWhenFinishLoad = NO;
         }else{
-            [self scrollToPageIndex:0];
+            [self changeToPage:0 animated:NO];
         }
         self.loadStatus = ChapterLoadStatusSuccess;
         [self.indicator stopAnimating];
@@ -244,14 +249,6 @@
 
 
 #pragma mark---other methods
-- (void)tapAction:(UITapGestureRecognizer *)gesture
-{
-    if(self.navigationController.isNavigationBarHidden){
-        [self.navigationController setNavigationBarHidden:NO];
-    }else{
-        [self.navigationController setNavigationBarHidden:YES];
-    }
-}
 
 //- (void)tapAction:(UITapGestureRecognizer *)gesture
 //{
