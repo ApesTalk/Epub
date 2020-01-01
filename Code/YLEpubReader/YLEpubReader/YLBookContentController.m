@@ -11,7 +11,7 @@
 #import "YLEpubManager.h"
 #import "YLStatics.h"
 
-@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate>
+@interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
 @property (nonatomic, copy) NSString *path;
 @property (nonatomic, copy) NSString *chapterTitle;
 
@@ -24,9 +24,6 @@
 @property (nonatomic, assign, readwrite) NSInteger maxColumnIndex;
 @property (nonatomic, assign, readwrite) ChapterLoadStatus loadStatus;
 @property (nonatomic, strong) UIActivityIndicatorView *indicator;
-@property (nonatomic, assign) BOOL barIsShow;
-
-
 @end
 
 @implementation YLBookContentController
@@ -47,26 +44,16 @@
     [self.view addSubview:self.chapterTitleLabel];
     [self.view addSubview:self.webView];
     [self.view addSubview:self.indexsLabel];
+    [self.view addSubview:self.indicator];
     
     self.chapterTitleLabel.text = self.chapterTitle;
-    
-    [self loadHtmlWithPath:self.path];
-    
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-//    tapGesture.delegate = self;
-//    [self.webView addGestureRecognizer:tapGesture];
 
-//    for(UIGestureRecognizer *gesture in self.webView.scrollView.gestureRecognizers){
-//        if(gesture != tapGesture){
-//            [gesture requireGestureRecognizerToFail:tapGesture];
-//        }
-//    }
+    [self loadHtmlWithPath:self.path];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    self.barIsShow = NO;
 //    [self.navigationController setNavigationBarHidden:YES animated:YES];
 //    [[UIApplication sharedApplication]setStatusBarHidden:YES];
 }
@@ -151,19 +138,22 @@
         NSLog(@"chapter.html path not exists");
         return;
     }
-    
-    self.path = path;
-    
+        
     if(self.webView.isLoading){
         [self.webView stopLoading];
     }
+
+    self.loadStatus = ChapterLoadStatusLoading;
+    [self.view bringSubviewToFront:self.webView];
+    [self.view bringSubviewToFront:self.indicator];
+    [self.indicator startAnimating];
+    
     
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     NSRange headRange = [htmlStr rangeOfString:@"<head>"];
     if(headRange.location != NSNotFound) {
         NSInteger headEndIndex = headRange.location + headRange.length;
         [htmlStr insertString:@"<meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0,user-scalable=no' />" atIndex:headEndIndex];
-
     }
     
     NSRange bodyRange = [htmlStr rangeOfString:@"<body>"];
@@ -196,8 +186,6 @@
 - (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation
 {
     self.loadStatus = ChapterLoadStatusLoading;
-    [self.view addSubview:self.indicator];
-    [self.indicator startAnimating];
 }
 
 - (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error
@@ -215,20 +203,26 @@
         js = @"document.documentElement.scrollWidth";
     }
     
-    [webView evaluateJavaScript:js completionHandler:^(id _Nullable result,NSError *_Nullable error) {
+    [webView evaluateJavaScript:js completionHandler:^(id result,NSError *_Nullable error) {
         self.contentWidth = [result floatValue];
         NSInteger totalPages = _contentWidth / kScreenWidth;
         self.maxColumnIndex = MAX(0, totalPages - 1);
         NSLog(@"scrollWidth=%f", _contentWidth);
+        self.loadStatus = ChapterLoadStatusSuccess;
+        [self.indicator stopAnimating];
+        
         if(self.goLastPageWhenFinishLoad){
             [self changeToPage:self.maxColumnIndex animated:NO];
             self.goLastPageWhenFinishLoad = NO;
         }else{
             [self changeToPage:0 animated:NO];
         }
-        self.loadStatus = ChapterLoadStatusSuccess;
-        [self.indicator stopAnimating];
     }];
+    
+    //change html document backgroudcolor
+//    [webView evaluateJavaScript:@"document.body.bgColor='#C2E4C1'" completionHandler:^(id ruslt, NSError * _Nullable error) {
+//
+//    }];
 }
 
 #pragma mark---UIScrollViewDelegate
@@ -237,33 +231,8 @@
     if(scrollView == self.webView.scrollView){
         CGFloat offsetX = scrollView.contentOffset.x;
         self.currentColumnIndex = offsetX / kScreenWidth;
-        NSLog(@"_currentColumnIndex=%li", self.currentColumnIndex);
+        NSLog(@"currentColumnIndex=%li", self.currentColumnIndex);
     }
 }
 
-#pragma mark---UIGestureRecognizerDelegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-    return YES;
-}
-
-
-#pragma mark---other methods
-
-//- (void)tapAction:(UITapGestureRecognizer *)gesture
-//{
-//    CGPoint point = [gesture locationInView:self.view];
-//    if(point.x >= 30 && point.x <= kScreenWidth - 30){
-//        if(self.barIsShow){
-//            self.barIsShow = NO;
-//            [[UIApplication sharedApplication]setStatusBarHidden:YES];
-////            [self.navigationController setNavigationBarHidden:YES animated:YES];
-//        }else{
-//            self.barIsShow = YES;
-//            [[UIApplication sharedApplication]setStatusBarHidden:NO];
-////            [self.navigationController setNavigationBarHidden:NO animated:YES];
-//        }
-//        [self setNeedsStatusBarAppearanceUpdate];
-//    }
-//}
 @end

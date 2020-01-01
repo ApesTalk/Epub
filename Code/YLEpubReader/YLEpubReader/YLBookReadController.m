@@ -36,7 +36,7 @@
     self.navigationItem.rightBarButtonItem = rightBtn;
     
     self.navigationController.interactivePopGestureRecognizer.enabled = NO;
-    NSArray *controllers = @[[self controllerForIndex:0]];
+    NSArray *controllers = @[[self controllerForIndex:3]];
     
     //UIPageViewControllerOptionSpineLocationKey 书脊位置
     //UIPageViewControllerOptionInterPageSpacingKey 针对水平滚动时页面之间的间距
@@ -197,6 +197,7 @@
     }
 }
 
+#pragma mark--kvo
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
 {
     if([keyPath isEqualToString:@"loadStatus"]){
