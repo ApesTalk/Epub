@@ -15,12 +15,23 @@ typedef NS_ENUM(NSInteger, ChapterLoadStatus) {
     ChapterLoadStatusError,///< 加载完成 -> 失败
 };
 
+@class YLBookContentController;
+@protocol BookControllerDelegate <NSObject>
+
+- (void)contentController:(YLBookContentController *)vc shouldDirect:(UIPageViewControllerNavigationDirection)direction;
+
+@end
+
+
+
 @interface YLBookContentController : YLBaseViewController
 @property (nonatomic, assign) NSInteger chapterIndex;///< 章节索引
 @property (nonatomic, assign, readonly) NSInteger currentColumnIndex;
 @property (nonatomic, assign, readonly) NSInteger maxColumnIndex;
 @property (nonatomic, assign, readonly) ChapterLoadStatus loadStatus;
 @property (nonatomic, assign) BOOL goLastPageWhenFinishLoad;
+@property (nonatomic, weak) id<BookControllerDelegate> delegate;
+
 - (instancetype)initWithHtmlPath:(NSString *)path title:(NSString *)title;
 //- (void)loadHtmlWithPath:(NSString *)path;
 - (void)scrollToPageIndex:(NSInteger)page;

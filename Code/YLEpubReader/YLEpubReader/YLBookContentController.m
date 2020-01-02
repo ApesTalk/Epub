@@ -49,6 +49,32 @@
     self.chapterTitleLabel.text = self.chapterTitle;
 
     [self loadHtmlWithPath:self.path];
+    
+    //UIPanGestureRecognizer：多列的情况下响应，单列的情况下不响应
+    for(UIGestureRecognizer *ges in self.webView.scrollView.gestureRecognizers){
+        if([ges isKindOfClass:[UIPanGestureRecognizer class]]){
+            [ges addTarget:self action:@selector(handlePan:)];
+        }
+    }
+
+//    UIScrollViewPagingSwipeGestureRecognizer
+    /*
+     
+     
+     <UIScrollViewDelayedTouchesBeganGestureRecognizer: 0x600003f82600; state = Possible; delaysTouchesBegan = YES; view = <WKScrollView 0x7ff4cc033200>; target= <(action=delayed:, target=<WKScrollView 0x7ff4cc033200>)>>
+    
+     <UIScrollViewPanGestureRecognizer: 0x7ff4cb527810; state = Possible; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=handlePan:, target=<WKScrollView 0x7ff4cc033200>)>; must-fail = {
+             <UIScrollViewPagingSwipeGestureRecognizer: 0x7ff4cb404270; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleSwipe:, target=<WKScrollView 0x7ff4cc033200>)>>
+         }>
+     
+     <UIScrollViewKnobLongPressGestureRecognizer: 0x7ff4cb527e80; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleKnobLongPressGesture:, target=<WKScrollView 0x7ff4cc033200>)>>
+     
+     <_UIDragAutoScrollGestureRecognizer: 0x600003ab87e0; state = Possible; cancelsTouchesInView = NO; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleAutoScroll:, target=<WKScrollView 0x7ff4cc033200>)>>
+     
+     <UIScrollViewPagingSwipeGestureRecognizer: 0x7ff4cb404270; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleSwipe:, target=<WKScrollView 0x7ff4cc033200>)>; must-fail-for = {
+             <UIScrollViewPanGestureRecognizer: 0x7ff4cb527810; state = Possible; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=handlePan:, target=<WKScrollView 0x7ff4cc033200>)>>
+         }>
+     */
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,7 +115,8 @@
         _webView.UIDelegate = self;
         _webView.navigationDelegate = self;
         _webView.scrollView.delegate = self;
-        _webView.scrollView.scrollEnabled = NO;
+//        _webView.scrollView.bounces = NO;
+//        _webView.scrollView.scrollEnabled = NO;
         if (@available(iOS 11.0, *)) {
             _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
@@ -207,7 +234,7 @@
         self.contentWidth = [result floatValue];
         NSInteger totalPages = _contentWidth / kScreenWidth;
         self.maxColumnIndex = MAX(0, totalPages - 1);
-        NSLog(@"scrollWidth=%f", _contentWidth);
+//        NSLog(@"scrollWidth=%f", _contentWidth);
         self.loadStatus = ChapterLoadStatusSuccess;
         [self.indicator stopAnimating];
         
@@ -225,13 +252,44 @@
 //    }];
 }
 
+
 #pragma mark---UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if(scrollView == self.webView.scrollView){
         CGFloat offsetX = scrollView.contentOffset.x;
+//        NSLog(@"offsetX=%f", offsetX);
         self.currentColumnIndex = offsetX / kScreenWidth;
-        NSLog(@"currentColumnIndex=%li", self.currentColumnIndex);
+//        NSLog(@"currentColumnIndex=%li", self.currentColumnIndex);
+    }
+}
+
+
+- (void)handlePan:(UIPanGestureRecognizer*)gesture
+{
+    if(self.loadStatus == ChapterLoadStatusIdle || self.loadStatus == ChapterLoadStatusLoading){
+        return;
+    }
+    
+    
+    CGPoint point = [gesture translationInView:self.webView.scrollView];
+    CGFloat x = self.webView.scrollView.contentOffset.x;
+    NSLog(@"offsetX=%f", x);
+    if(fabs(point.x) > fabs(point.y)){
+        //left right
+        if(point.x > 0 && self.currentColumnIndex == 0 && x <= 0){
+            //right
+            if([self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
+                [self.delegate contentController:self shouldDirect:UIPageViewControllerNavigationDirectionReverse];
+            }
+        }else if (point.x < 0 && self.currentColumnIndex == self.maxColumnIndex && x >= kScreenWidth * self.maxColumnIndex){
+            //left
+            if([self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
+                [self.delegate contentController:self shouldDirect:UIPageViewControllerNavigationDirectionForward];
+            }
+        }
+    }else{
+        //up down
     }
 }
 

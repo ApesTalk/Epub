@@ -13,7 +13,7 @@
 #import "YLCatalogController.h"
 
 
-@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate>
+@interface YLBookReadController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate,UIGestureRecognizerDelegate,BookControllerDelegate>
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
 @property (nonatomic, assign) NSUInteger currentChapterIndex;
@@ -89,15 +89,15 @@
     tapGesture.delegate = self;
     [self.view addGestureRecognizer:tapGesture];
     
-    UISwipeGestureRecognizer *preSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(preSwipeAction:)];
-    preSwipe.direction = UISwipeGestureRecognizerDirectionRight;
-    preSwipe.delegate = self;
-    [self.view addGestureRecognizer:preSwipe];
-    
-    UISwipeGestureRecognizer *nextSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(nextSwipeAction:)];
-    nextSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
-    nextSwipe.delegate = self;
-    [self.view addGestureRecognizer:nextSwipe];
+//    UISwipeGestureRecognizer *preSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(preSwipeAction:)];
+//    preSwipe.direction = UISwipeGestureRecognizerDirectionRight;
+//    preSwipe.delegate = self;
+//    [self.view addGestureRecognizer:preSwipe];
+//
+//    UISwipeGestureRecognizer *nextSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(nextSwipeAction:)];
+//    nextSwipe.direction = UISwipeGestureRecognizerDirectionLeft;
+//    nextSwipe.delegate = self;
+//    [self.view addGestureRecognizer:nextSwipe];
     
 }
 
@@ -168,6 +168,9 @@
             preChapterVc.goLastPageWhenFinishLoad = YES;
             return preChapterVc;
         }
+    }else{
+        [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex - 1];
+        return currentChapterVc;
     }
     return nil;
 }
@@ -180,6 +183,9 @@
         if(index != NSNotFound && index + 1 < self.epub.spine.count){
             return [self controllerForIndex:index + 1];
         }
+    }else{
+        [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex + 1];
+        return currentChapterVc;
     }
     return nil;
 }
@@ -206,6 +212,16 @@
     }
 }
 
+#pragma mark---BookControllerDelegate
+- (void)contentController:(YLBookContentController *)vc shouldDirect:(UIPageViewControllerNavigationDirection)direction
+{
+    if(direction == UIPageViewControllerNavigationDirectionReverse){
+        [self preAction];
+    }else{
+        [self nextAction];
+    }
+}
+
 #pragma mark---other methods
 - (YLBookContentController *)controllerForIndex:(NSInteger)index
 {
@@ -220,6 +236,7 @@
     NSString *htmlPath = [NSString stringWithFormat:@"%@%@", self.epub.opsPath, href];
     YLBookContentController *contentVc = [[YLBookContentController alloc] initWithHtmlPath:htmlPath title:idref];
     contentVc.chapterIndex = index;
+    contentVc.delegate = self;
     [contentVc addObserver:self forKeyPath:@"loadStatus" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
     return contentVc;
 }
@@ -260,33 +277,6 @@
     gesture.enabled = YES;
 }
 
-//- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-//{
-//    YLBookContentController *currentChapterVc = (YLBookContentController *)[self.pageViewController viewControllers].firstObject;
-//    NSInteger currentIndex = currentChapterVc.currentColumnIndex;
-//    NSInteger maxIndex = currentChapterVc.maxColumnIndex;
-//    ChapterLoadStatus status = currentChapterVc.loadStatus;
-//    if(status != ChapterLoadStatusSuccess || status != ChapterLoadStatusError){
-//        currentChapterVc.view.userInteractionEnabled = NO;
-//        return NO;
-//    }
-//    if(currentIndex == 0){
-//        //left Reverse
-//        if(currentChapterVc.chapterIndex > 0 && [touch locationInView:self.view].x < kScreenWidth * 0.5){
-//            currentChapterVc.view.userInteractionEnabled = NO;
-//            return YES;
-//        }
-//    }
-//    if (currentChapterVc.chapterIndex < self.epub.spine.count - 1 && currentIndex == maxIndex){
-//        //right Forward
-//        if([touch locationInView:self.view].x >= kScreenWidth * 0.5){
-//            currentChapterVc.view.userInteractionEnabled = NO;
-//            return YES;
-//        }
-//    }
-//    currentChapterVc.view.userInteractionEnabled = YES;
-//    return NO;
-//}
 
 - (void)checkSpine
 {
