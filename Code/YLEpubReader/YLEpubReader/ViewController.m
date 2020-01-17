@@ -23,30 +23,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UITextView *textView = [[UITextView alloc]initWithFrame:self.view.bounds];
-    textView.font = [UIFont systemFontOfSize:20];
-    textView.textColor = [UIColor blackColor];
-    textView.text = @"陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生";
-    [self.view addSubview:textView];
-    return;
+//    UITextView *textView = [[UITextView alloc]initWithFrame:self.view.bounds];
+//    textView.font = [UIFont systemFontOfSize:20];
+//    textView.textColor = [UIColor blackColor];
+//    textView.text = @"陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生陈二狗的妖孽人生";
+//    [self.view addSubview:textView];
+//    return;
     
 //    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
 //    YLEpub *epub = [[YLEpub alloc]initWithName:@"陈二狗的妖孽人生" filePath:filePath];
 //    BOOL b = [YLEpubManager unZipEpubWithPath:filePath delegate:self];
 //    epub.unZipedPath = [YLEpubManager unZipedPathForEpub:epub];
     
-//    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
-//    webView.backgroundColor = [UIColor whiteColor];
-//    webView.delegate = self;
-//    webView.scrollView.pagingEnabled = YES;
-//    webView.scrollView.showsVerticalScrollIndicator = NO;
-//    webView.scrollView.showsHorizontalScrollIndicator = NO;
-//    webView.scrollView.bounces = NO;
-//    webView.scrollView.tintColor = [UIColor redColor];
-//    [self.view addSubview:webView];
-//    NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
-//    NSURL *url = [NSURL fileURLWithPath:path];
-//    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
+    webView.backgroundColor = [UIColor whiteColor];
+    webView.delegate = self;
+    webView.scrollView.pagingEnabled = YES;
+    webView.scrollView.showsVerticalScrollIndicator = NO;
+    webView.scrollView.showsHorizontalScrollIndicator = NO;
+    webView.scrollView.bounces = NO;
+    webView.scrollView.tintColor = [UIColor redColor];
+    [self.view addSubview:webView];
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"chapter_269231114" ofType:@"xhtml"];
+    NSURL *url = [NSURL fileURLWithPath:path];
+    [webView loadRequest:[NSURLRequest requestWithURL:url]];
+    return;
     
     //测试矢量图
 //    UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(0, 20, self.view.bounds.size.width, self.view.bounds.size.width * 48 / 40)];

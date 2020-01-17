@@ -1,8 +1,8 @@
 body{
 margin:0px;
-height: 568px;
-width: 320px;
-column-width: 280px;/*每栏宽度 未屏幕宽度-左内边距-分栏间距*/
+height: 667px;
+width: 375px;
+column-width: 335px;/*每栏宽度 屏幕宽度-左内边距-分栏间距*/
 column-gap: 0px;/*分栏间距，第一栏的左侧和最后一栏的右侧没有间距*/
 text-align: justify;/*文字两端对齐*/
 font-size: 1.0em;

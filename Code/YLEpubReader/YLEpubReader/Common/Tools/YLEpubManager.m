@@ -30,7 +30,7 @@
     if(![lastPathComponent hasSuffix:@"epub"]){
         return NO;
     }else{
-        NSString *fileName = [lastPathComponent stringByReplacingOccurrencesOfString:@".epub" withString:@""];
+        NSString *fileName = lastPathComponent.stringByDeletingPathExtension;
         if(fileName.length == 0){
             return NO;
         }

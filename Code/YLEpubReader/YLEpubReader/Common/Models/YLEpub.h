@@ -36,6 +36,8 @@
 @property (nonatomic, strong) NSMutableDictionary *mainifest;///< 清单
 @property (nonatomic, strong) NSMutableArray *spine;///< 书脊
 
+@property (nonatomic, copy) NSString *localBookContentPath;
+
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path;
 - (void)setMetadata:(NSDictionary *)metadata;
 - (NSString *)coverPath;///< 封面图路径

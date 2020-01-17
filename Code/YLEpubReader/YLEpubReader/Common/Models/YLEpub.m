@@ -73,6 +73,12 @@
     return nil;
 }
 
+- (NSString *)localBookContentPath
+{
+    return self.opsPath;
+    return [YLEpubManager unZipedFolderPathForEpubName:self.name?:@""];
+}
+
 - (void)modifyCss
 {
     //修改body样式，添加bookcontent样式

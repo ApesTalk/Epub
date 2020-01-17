@@ -16,7 +16,7 @@
 @property (nonatomic, copy) NSString *chapterTitle;
 
 @property (nonatomic, strong) UILabel *chapterTitleLabel;
-@property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, strong) WKWebView *wkWebView;
 @property (nonatomic, strong) UILabel *indexsLabel;
 
 @property (nonatomic, assign) CGFloat contentWidth;
@@ -40,9 +40,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
+    self.automaticallyAdjustsScrollViewInsets = NO;
     [self.view addSubview:self.chapterTitleLabel];
-    [self.view addSubview:self.webView];
+    [self.view addSubview:self.wkWebView];
     [self.view addSubview:self.indexsLabel];
     [self.view addSubview:self.indicator];
     
@@ -51,7 +51,7 @@
     [self loadHtmlWithPath:self.path];
     
     //UIPanGestureRecognizer：多列的情况下响应，单列的情况下不响应
-    for(UIGestureRecognizer *ges in self.webView.scrollView.gestureRecognizers){
+    for(UIGestureRecognizer *ges in self.wkWebView.scrollView.gestureRecognizers){
         if([ges isKindOfClass:[UIPanGestureRecognizer class]]){
             [ges addTarget:self action:@selector(handlePan:)];
         }
@@ -103,27 +103,27 @@
     return _chapterTitleLabel;
 }
 
-- (WKWebView *)webView
+- (WKWebView *)wkWebView
 {
-    if(!_webView){
+    if(!_wkWebView){
         WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc]init];
-        _webView = [[WKWebView alloc]initWithFrame:CGRectMake(0, kStatusAndNavigationBarHeight, kEpubViewWidth, kEpubViewHeight) configuration:config];
-        _webView.backgroundColor = [UIColor whiteColor];
-        _webView.scrollView.pagingEnabled = YES;
-        _webView.scrollView.showsVerticalScrollIndicator = NO;
-        _webView.scrollView.showsHorizontalScrollIndicator = NO;
-        _webView.UIDelegate = self;
-        _webView.navigationDelegate = self;
-        _webView.scrollView.delegate = self;
-//        _webView.scrollView.bounces = NO;
-//        _webView.scrollView.scrollEnabled = NO;
+        _wkWebView = [[WKWebView alloc]initWithFrame:CGRectMake(0, kStatusAndNavigationBarHeight, kEpubViewWidth, kEpubViewHeight) configuration:config];
+        _wkWebView.backgroundColor = [UIColor whiteColor];
+        _wkWebView.scrollView.pagingEnabled = YES;
+        _wkWebView.scrollView.showsVerticalScrollIndicator = NO;
+        _wkWebView.scrollView.showsHorizontalScrollIndicator = NO;
+        _wkWebView.UIDelegate = self;
+        _wkWebView.navigationDelegate = self;
+        _wkWebView.scrollView.delegate = self;
+//        _wkWebView.scrollView.bounces = NO;
+//        _wkWebView.scrollView.scrollEnabled = NO;
         if (@available(iOS 11.0, *)) {
-            _webView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+            _wkWebView.scrollView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
         } else {
             // Fallback on earlier versions
         }
     }
-    return _webView;
+    return _wkWebView;
 }
 
 - (UILabel *)indexsLabel
@@ -166,36 +166,47 @@
         return;
     }
         
-    if(self.webView.isLoading){
-        [self.webView stopLoading];
+    if(self.wkWebView.isLoading){
+        [self.wkWebView stopLoading];
     }
 
     self.loadStatus = ChapterLoadStatusLoading;
-    [self.view bringSubviewToFront:self.webView];
+    [self.view bringSubviewToFront:self.wkWebView];
     [self.view bringSubviewToFront:self.indicator];
     [self.indicator startAnimating];
     
     
     NSMutableString *htmlStr = [NSMutableString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    NSRange headRange = [htmlStr rangeOfString:@"<head>"];
-    if(headRange.location != NSNotFound) {
-        NSInteger headEndIndex = headRange.location + headRange.length;
-        [htmlStr insertString:@"<meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0,user-scalable=no' />" atIndex:headEndIndex];
+    if(![htmlStr containsString:kBookContentDiv]){
+        NSRange headRange = [htmlStr rangeOfString:@"<head>"];
+        if(headRange.location != NSNotFound) {
+            NSInteger headEndIndex = headRange.location + headRange.length;
+            [htmlStr insertString:@"<meta name='viewport' content='initial-scale=1.0, minimum-scale=1.0, maximum-scale = 1.0, user-scalable=no' />" atIndex:headEndIndex];
+        }
+
+        NSRange bodyRange = [htmlStr rangeOfString:@"<body>"];
+        if(bodyRange.location != NSNotFound){
+            NSInteger bodyBeginIndex = bodyRange.location + bodyRange.length;
+            [htmlStr insertString:[NSString stringWithFormat:@"<div class='%@'>", kBookContentDiv] atIndex:bodyBeginIndex];
+        }
+
+        NSInteger bodyEndIndex = [htmlStr rangeOfString:@"</body>"].location;
+        if(bodyEndIndex != NSNotFound){
+            [htmlStr insertString:@"</div>" atIndex:bodyEndIndex];
+        }
+        
+        //!!!!:WKWebView
+        [htmlStr writeToURL:[NSURL fileURLWithPath:path] atomically:YES encoding:NSUTF8StringEncoding error:NULL];
     }
-    
-    NSRange bodyRange = [htmlStr rangeOfString:@"<body>"];
-    if(bodyRange.location != NSNotFound){
-        NSInteger bodyBeginIndex = bodyRange.location + bodyRange.length;
-        [htmlStr insertString:[NSString stringWithFormat:@"<div class='%@'>", kBookContentDiv] atIndex:bodyBeginIndex];
-    }
-   
-    NSInteger bodyEndIndex = [htmlStr rangeOfString:@"</body>"].location;
-    if(bodyEndIndex != NSNotFound){
-        [htmlStr insertString:@"</div>" atIndex:bodyEndIndex];
-    }
+
     
     NSLog(@"html:%@", htmlStr);
-    [self.webView loadHTMLString:htmlStr baseURL:[NSURL fileURLWithPath:path]];
+    //!!!!: 在加载本地资源（img\css）UIWebView比WKWebView优
+    //WKWebView这种方式在模拟器上可以，在真机上不行！苹果的意思是这种方式不安全。。。 而UIWebView这种方式在模拟器和真机上都可以。
+//    [self.wkWebView loadHTMLString:htmlStr.copy baseURL:[NSURL fileURLWithPath:self.bookPath isDirectory:YES]];
+
+    //!!!!:WKWebView必须以这种方式才能正常读取到本地的img和css，主要是css才能生效！
+    [self.wkWebView loadFileURL:[NSURL fileURLWithPath:path] allowingReadAccessToURL:[NSURL fileURLWithPath:self.bookPath isDirectory:YES]];
 }
 
 - (void)scrollToPageIndex:(NSInteger)page
@@ -206,7 +217,7 @@
 - (void)changeToPage:(NSInteger)page animated:(BOOL)animated
 {
     self.currentColumnIndex = page;
-    [self.webView.scrollView setContentOffset:CGPointMake(kScreenWidth * page, self.webView.scrollView.contentOffset.y) animated:animated];
+    [self.wkWebView.scrollView setContentOffset:CGPointMake(kEpubViewWidth * page, self.wkWebView.scrollView.contentOffset.y) animated:animated];
 }
 
 #pragma mark---WKNavigationDelegate
@@ -239,7 +250,13 @@
         [self.indicator stopAnimating];
         
         if(self.goLastPageWhenFinishLoad){
-            [self changeToPage:self.maxColumnIndex animated:NO];
+            //滚到到指定位置
+            //模拟器上直接 [self changeToPage:self.maxColumnIndex animated:NO];可以，真机上不行，得加个延迟。或用js实现滚动
+//            NSString *script = [NSString stringWithFormat:@"scrollTo(%.0f, 0)", self.maxColumnIndex*kEpubViewWidth];
+//            [self.wkWebView evaluateJavaScript:script completionHandler:nil];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.05 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self changeToPage:self.maxColumnIndex animated:NO];
+            });
             self.goLastPageWhenFinishLoad = NO;
         }else{
             [self changeToPage:0 animated:NO];
@@ -256,7 +273,7 @@
 #pragma mark---UIScrollViewDelegate
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    if(scrollView == self.webView.scrollView){
+    if(scrollView == self.wkWebView.scrollView){
         CGFloat offsetX = scrollView.contentOffset.x;
 //        NSLog(@"offsetX=%f", offsetX);
         self.currentColumnIndex = offsetX / kScreenWidth;
@@ -272,19 +289,19 @@
     }
     
     
-    CGPoint point = [gesture translationInView:self.webView.scrollView];
-    CGFloat x = self.webView.scrollView.contentOffset.x;
+    CGPoint point = [gesture translationInView:self.wkWebView.scrollView];
+    CGFloat x = self.wkWebView.scrollView.contentOffset.x;
     NSLog(@"offsetX=%f", x);
     if(fabs(point.x) > fabs(point.y)){
         //left right
         if(point.x > 0 && self.currentColumnIndex == 0 && x <= 0){
             //right
-            if([self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
+            if(self.delegate && [self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
                 [self.delegate contentController:self shouldDirect:UIPageViewControllerNavigationDirectionReverse];
             }
-        }else if (point.x < 0 && self.currentColumnIndex == self.maxColumnIndex && x >= kScreenWidth * self.maxColumnIndex){
+        }else if (point.x < 0 && self.currentColumnIndex == self.maxColumnIndex && x >= kEpubViewWidth * self.maxColumnIndex){
             //left
-            if([self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
+            if(self.delegate && [self.delegate respondsToSelector:@selector(contentController:shouldDirect:)]){
                 [self.delegate contentController:self shouldDirect:UIPageViewControllerNavigationDirectionForward];
             }
         }
@@ -293,4 +310,16 @@
     }
 }
 
+
+- (void)dealloc
+{
+//    _wkWebView.UIDelegate = nil;
+//    _wkWebView.navigationDelegate = nil;
+    self.wkWebView.scrollView.delegate = nil;
+    for(UIGestureRecognizer *ges in self.wkWebView.scrollView.gestureRecognizers){
+        if([ges isKindOfClass:[UIPanGestureRecognizer class]]){
+            [ges removeTarget:self action:@selector(handlePan:)];
+        }
+    }
+}
 @end

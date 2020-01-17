@@ -107,6 +107,9 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 
 - (void)xmlManager:(YLXMLManager *)manager didFinishParsing:(YLEpub *)epub
 {
+    NSString *name = [_bookNames objectAtIndex:self.currentUnZipIndex];
+    epub.name = name;
+    
     epub.opsPath = self.opsPath;
     [epub modifyCss];
     [self.eBooks addObject:epub];

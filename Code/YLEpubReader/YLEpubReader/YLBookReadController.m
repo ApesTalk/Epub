@@ -17,7 +17,6 @@
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
 @property (nonatomic, assign) NSUInteger currentChapterIndex;
-@property (nonatomic, assign) ChapterLoadStatus loadStatus;
 @end
 
 @implementation YLBookReadController
@@ -32,6 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.automaticallyAdjustsScrollViewInsets = NO;
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(checkSpine)];
     self.navigationItem.rightBarButtonItem = rightBtn;
     
@@ -119,7 +119,7 @@
     [self.navigationController setNavigationBarHidden:YES];
 
     YLBookContentController *currentChapterVc = (YLBookContentController *)self.pageViewController.viewControllers.firstObject;
-    if(self.loadStatus == ChapterLoadStatusIdle || self.loadStatus == ChapterLoadStatusLoading){
+    if(currentChapterVc.loadStatus == ChapterLoadStatusIdle || currentChapterVc.loadStatus == ChapterLoadStatusLoading){
         //防止快读点击->切换章节
         return;
     }
@@ -141,7 +141,7 @@
     [self.navigationController setNavigationBarHidden:YES];
     
     YLBookContentController *currentChapterVc = (YLBookContentController *)self.pageViewController.viewControllers.firstObject;
-    if(self.loadStatus == ChapterLoadStatusIdle || self.loadStatus == ChapterLoadStatusLoading){
+    if(currentChapterVc.loadStatus == ChapterLoadStatusIdle || currentChapterVc.loadStatus == ChapterLoadStatusLoading){
         //防止快读点击->切换章节
         return;
     }
@@ -170,7 +170,6 @@
         }
     }else{
         [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex - 1];
-        return currentChapterVc;
     }
     return nil;
 }
@@ -185,7 +184,6 @@
         }
     }else{
         [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex + 1];
-        return currentChapterVc;
     }
     return nil;
 }
@@ -203,14 +201,6 @@
     }
 }
 
-#pragma mark--kvo
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context
-{
-    if([keyPath isEqualToString:@"loadStatus"]){
-        NSLog(@"kvo loadStatus %@", change[NSKeyValueChangeNewKey]);
-        self.loadStatus = [[change objectForKey:NSKeyValueChangeNewKey] integerValue];
-    }
-}
 
 #pragma mark---BookControllerDelegate
 - (void)contentController:(YLBookContentController *)vc shouldDirect:(UIPageViewControllerNavigationDirection)direction
@@ -235,9 +225,9 @@
     self.title = idref;
     NSString *htmlPath = [NSString stringWithFormat:@"%@%@", self.epub.opsPath, href];
     YLBookContentController *contentVc = [[YLBookContentController alloc] initWithHtmlPath:htmlPath title:idref];
+    contentVc.bookPath = self.epub.localBookContentPath;
     contentVc.chapterIndex = index;
     contentVc.delegate = self;
-    [contentVc addObserver:self forKeyPath:@"loadStatus" options:NSKeyValueObservingOptionInitial|NSKeyValueObservingOptionNew context:nil];
     return contentVc;
 }
 
