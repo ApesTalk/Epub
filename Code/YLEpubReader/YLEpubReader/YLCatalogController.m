@@ -12,7 +12,7 @@
 
 static NSString *cellIdentifier = @"cell";
 
-@interface YLCatalogController ()<UITableViewDataSource, UITableViewDelegate>
+@interface YLCatalogController ()<UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (nonatomic, strong) YLEpub *epub;
 @property (nonatomic, assign) NSUInteger currentIndex;
 @property (nonatomic, strong) UITableView *spineTable;
@@ -49,6 +49,7 @@ static NSString *cellIdentifier = @"cell";
     UIView *cover = [[UIView alloc]initWithFrame:self.view.bounds];
     [self.view addSubview:cover];
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapBack)];
+    tap.delegate = self;
     [cover addGestureRecognizer:tap];
     
     self.view.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.15];
@@ -107,6 +108,12 @@ static NSString *cellIdentifier = @"cell";
     [self tapBack];
 }
 
+#pragma mark---UIGestureRecognizerDelegate
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    return touch.view != self.spineTable;
+}
+
 #pragma mark---other methods
 - (void)tapBack
 {
@@ -121,6 +128,7 @@ static NSString *cellIdentifier = @"cell";
         [self removeFromParentViewController];
         [self.view removeFromSuperview];
     }];
+    !_dismissCatalog?:_dismissCatalog();
 }
 
 @end

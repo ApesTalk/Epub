@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UIPageViewController *pageViewController;
 @property (nonatomic, strong) YLEpub *epub;
 @property (nonatomic, assign) NSUInteger currentChapterIndex;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGesture;
 @end
 
 @implementation YLBookReadController
@@ -88,9 +89,9 @@
 //        }
 //    }
     
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
-    tapGesture.delegate = self;
-    [self.view addGestureRecognizer:tapGesture];
+    _tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAction:)];
+    _tapGesture.delegate = self;
+    [self.view addGestureRecognizer:_tapGesture];
     
 //    UISwipeGestureRecognizer *preSwipe = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(preSwipeAction:)];
 //    preSwipe.direction = UISwipeGestureRecognizerDirectionRight;
@@ -270,11 +271,10 @@
     gesture.enabled = YES;
 }
 
-
 - (void)checkSpine
 {
-//    [[UIApplication sharedApplication]setStatusBarHidden:YES];
     [self.navigationController setNavigationBarHidden:YES animated:YES];
+    self.tapGesture.enabled = NO;
     YLCatalogController *catalogVc = [[YLCatalogController alloc]initWithEpub:self.epub currentCatalogIndex:self.currentChapterIndex];
     __weak typeof(self) weakSelf = self;
     catalogVc.didSelectCatalog = ^(YLEpub *epub, NSUInteger cIndex) {
@@ -285,6 +285,9 @@
             YLBookContentController *chapterVc = [weakSelf controllerForIndex:cIndex];
             [weakSelf.pageViewController setViewControllers:@[chapterVc] direction:UIPageViewControllerNavigationDirectionReverse animated:YES completion:nil];
         }
+    };
+    catalogVc.dismissCatalog = ^{
+        self.tapGesture.enabled = YES;
     };
     [catalogVc showInController:self];
 }

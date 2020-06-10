@@ -10,6 +10,7 @@
 @class YLEpub;
 
 @interface YLCatalogController : YLBaseViewController
+@property (nonatomic, copy) void (^dismissCatalog)(void);
 @property (nonatomic, copy) void (^didSelectCatalog)(YLEpub *epub, NSUInteger cIndex);
 - (instancetype)initWithEpub:(YLEpub *)epub currentCatalogIndex:(NSUInteger)cIndex;
 - (void)showInController:(UIViewController *)controller;
