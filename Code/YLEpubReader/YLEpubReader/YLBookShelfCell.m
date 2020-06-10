@@ -11,7 +11,7 @@
 #import "YLEpub.h"
 
 @interface YLBookShelfCell ()
-@property (nonatomic, strong) UIImageView *coverImg;
+@property (nonatomic, strong, readwrite) UIImageView *coverImg;
 @property (nonatomic, strong) UILabel *nameLabel;
 @end
 

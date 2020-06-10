@@ -11,6 +11,8 @@
 @class YLEpub;
 
 @interface YLBookShelfCell : UICollectionViewCell
+@property (nonatomic, strong, readonly) UIImageView *coverImg;
+
 - (void)loadWithEpub:(YLEpub *)epub;
 + (CGFloat)width;
 + (CGFloat)height;

@@ -9,5 +9,5 @@
 #import "YLBaseViewController.h"
 
 @interface YLBookShelfController : YLBaseViewController
-
+@property (nonatomic, strong) UIView *transitionView;
 @end

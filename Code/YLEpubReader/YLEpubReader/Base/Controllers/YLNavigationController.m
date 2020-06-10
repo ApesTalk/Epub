@@ -7,9 +7,10 @@
 //
 
 #import "YLNavigationController.h"
+#import "YLNavigationDelegate.h"
 
 @interface YLNavigationController ()
-
+@property (nonatomic, strong) YLNavigationDelegate *naviDelegate;
 @end
 
 @implementation YLNavigationController
@@ -18,6 +19,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor]}];
+    _naviDelegate = [YLNavigationDelegate new];
+    self.delegate = _naviDelegate;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -25,14 +28,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

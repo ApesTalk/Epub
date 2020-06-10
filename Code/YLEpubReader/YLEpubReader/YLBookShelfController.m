@@ -77,6 +77,9 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 #pragma mark---UICollectionViewDelegate
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    YLBookShelfCell *cell = (YLBookShelfCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    self.transitionView = cell.coverImg;
+    
     YLEpub *epub = [self.eBooks objectAtIndex:indexPath.row];
     YLBookReadController *readVc = [[YLBookReadController alloc]initWithEpub:epub];
     [self.navigationController pushViewController:readVc animated:YES];

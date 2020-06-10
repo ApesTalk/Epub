@@ -28,6 +28,9 @@
 		6D5D85C72082FA8900D8D902 /* YLBookShelfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85C62082FA8900D8D902 /* YLBookShelfCell.m */; };
 		6D5D85CB208390EA00D8D902 /* YLBookReadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85CA208390EA00D8D902 /* YLBookReadController.m */; };
 		6D5D85CE2083915000D8D902 /* YLBookContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85CD2083915000D8D902 /* YLBookContentController.m */; };
+		6D633ACB24907C5100585FD3 /* YLNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633ACA24907C5100585FD3 /* YLNavigationDelegate.m */; };
+		6D633ACE24907CB200585FD3 /* YLFlipPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633ACD24907CB200585FD3 /* YLFlipPushTransition.m */; };
+		6D633AD124907CC400585FD3 /* YLFlipPopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633AD024907CC400585FD3 /* YLFlipPopTransition.m */; };
 		6DF981D4207C693F009AE2C0 /* chapter_269231114.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */; };
 		6DF981D6207C6A1C009AE2C0 /* stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D5207C6A1C009AE2C0 /* stylesheet.css */; };
 		7F9E4232F1B439C521320F0F /* libPods-YLEpubReaderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6E0CD90F7F8F2CFAC6FF6B /* libPods-YLEpubReaderTests.a */; };
@@ -97,6 +100,12 @@
 		6D5D85CA208390EA00D8D902 /* YLBookReadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookReadController.m; sourceTree = "<group>"; };
 		6D5D85CC2083915000D8D902 /* YLBookContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBookContentController.h; sourceTree = "<group>"; };
 		6D5D85CD2083915000D8D902 /* YLBookContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookContentController.m; sourceTree = "<group>"; };
+		6D633AC924907C5100585FD3 /* YLNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLNavigationDelegate.h; sourceTree = "<group>"; };
+		6D633ACA24907C5100585FD3 /* YLNavigationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLNavigationDelegate.m; sourceTree = "<group>"; };
+		6D633ACC24907CB200585FD3 /* YLFlipPushTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFlipPushTransition.h; sourceTree = "<group>"; };
+		6D633ACD24907CB200585FD3 /* YLFlipPushTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFlipPushTransition.m; sourceTree = "<group>"; };
+		6D633ACF24907CC400585FD3 /* YLFlipPopTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFlipPopTransition.h; sourceTree = "<group>"; };
+		6D633AD024907CC400585FD3 /* YLFlipPopTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFlipPopTransition.m; sourceTree = "<group>"; };
 		6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chapter_269231114.xhtml; sourceTree = "<group>"; };
 		6DF981D5207C6A1C009AE2C0 /* stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = stylesheet.css; sourceTree = "<group>"; };
 		7110E20966599E6D73A299BD /* Pods-YLEpubReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader.debug.xcconfig"; sourceTree = "<group>"; };
@@ -291,7 +300,6 @@
 			children = (
 				6D5D85B92082F5F500D8D902 /* Controllers */,
 				6D5D85BA2082F5F500D8D902 /* Models */,
-				6D5D85BB2082F5F500D8D902 /* Views */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -310,15 +318,14 @@
 		6D5D85BA2082F5F500D8D902 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6D633AC924907C5100585FD3 /* YLNavigationDelegate.h */,
+				6D633ACA24907C5100585FD3 /* YLNavigationDelegate.m */,
+				6D633ACC24907CB200585FD3 /* YLFlipPushTransition.h */,
+				6D633ACD24907CB200585FD3 /* YLFlipPushTransition.m */,
+				6D633ACF24907CC400585FD3 /* YLFlipPopTransition.h */,
+				6D633AD024907CC400585FD3 /* YLFlipPopTransition.m */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		6D5D85BB2082F5F500D8D902 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
 			sourceTree = "<group>";
 		};
 		8B6A064A4169B58137ACBE2E /* Pods */ = {
@@ -626,10 +633,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D633ACE24907CB200585FD3 /* YLFlipPushTransition.m in Sources */,
 				6D261CDD2249187000EA85B4 /* YLCatalogController.m in Sources */,
+				6D633ACB24907C5100585FD3 /* YLNavigationDelegate.m in Sources */,
 				6D5D85BE2082F60C00D8D902 /* YLBaseViewController.m in Sources */,
 				6D5D85CB208390EA00D8D902 /* YLBookReadController.m in Sources */,
 				6D5D85CE2083915000D8D902 /* YLBookContentController.m in Sources */,
+				6D633AD124907CC400585FD3 /* YLFlipPopTransition.m in Sources */,
 				6D058CA5208C6DCC00340A49 /* UIView+AOP.m in Sources */,
 				6D5D85B42082400600D8D902 /* YLEpub.m in Sources */,
 				6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */,

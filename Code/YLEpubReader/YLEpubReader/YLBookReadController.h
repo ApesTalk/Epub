@@ -10,5 +10,6 @@
 @class YLEpub;
 
 @interface YLBookReadController : YLBaseViewController
+@property (nonatomic, strong) UIView *transitionView;
 - (instancetype)initWithEpub:(YLEpub *)epub;
 @end

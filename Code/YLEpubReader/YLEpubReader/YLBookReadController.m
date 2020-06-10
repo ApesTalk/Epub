@@ -31,6 +31,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    _transitionView = [[UIImageView alloc]initWithImage:[UIImage imageWithContentsOfFile:[self.epub coverPath]]];
+    _transitionView.frame = [UIScreen mainScreen].bounds;
+    
     self.automaticallyAdjustsScrollViewInsets = NO;
     UIBarButtonItem *rightBtn = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks target:self action:@selector(checkSpine)];
     self.navigationItem.rightBarButtonItem = rightBtn;
