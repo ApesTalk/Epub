@@ -11,6 +11,10 @@
 #import "YLStatics.h"
 #import <UIKit/UIKit.h>
 
+@implementation YLEpubChapter
+@end
+
+
 @implementation YLEpub
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path
 {
@@ -65,7 +69,11 @@
 
 - (NSString *)coverPath
 {
-    NSString *coverImage = [self.mainifest objectForKey:@"cover-image"];
+    //MARK:这里暂时只考虑这两种情况
+    NSString *coverImage = [self.manifest objectForKey:@"cover-image"];
+    if(coverImage.length == 0){
+        coverImage = [self.manifest objectForKey:@"cover_img"];
+    }
     if(coverImage && self.opsPath){
         NSString *path = [NSString stringWithFormat:@"%@%@", self.opsPath, coverImage];
         return path;
@@ -76,14 +84,28 @@
 - (NSString *)localBookContentPath
 {
     return self.opsPath;
-    return [YLEpubManager unZipedFolderPathForEpubName:self.name?:@""];
+//    return [YLEpubManager unZipedFolderPathForEpubName:self.name?:@""];
 }
 
+//MARK:此处目前还没办法做到全面，除非所有电子书使用的css样式统一
 - (void)modifyCss
 {
     //修改body样式，添加bookcontent样式
-    if(self.opsPath && self.mainifest && [self.mainifest objectForKey:@"css"]){
-        NSString *cssPath = [NSString stringWithFormat:@"%@%@", self.opsPath, [self.mainifest objectForKey:@"css"]];
+    //MARK:暂时只考虑这两种情况
+    NSString *cssFile = [self.manifest objectForKey:@"css"];
+    if(!cssFile){
+        for(NSString *value in self.manifest.allValues){
+            if([value hasSuffix:@".css"]){
+                cssFile = value;
+                break;
+            }
+        }
+    }
+    if(!cssFile){
+        NSLog(@"!!!!: %@ 未找到css文件", self.name);
+    }
+    if(self.opsPath && self.manifest && cssFile){
+        NSString *cssPath = [NSString stringWithFormat:@"%@%@", self.opsPath, cssFile];
         NSError *error;
         NSString *cssStr = [[NSString alloc]initWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:&error];
         if(error || [cssStr containsString:kBookContentDiv]){
@@ -163,4 +185,5 @@
         NSLog(@"error=%@", error);
     }
 }
+
 @end

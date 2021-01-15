@@ -10,11 +10,9 @@
 #import <WebKit/WebKit.h>
 #import "YLEpubManager.h"
 #import "YLStatics.h"
+#import "YLEpub.h"
 
 @interface YLBookContentController () <WKUIDelegate,WKNavigationDelegate,UIScrollViewDelegate>
-@property (nonatomic, copy) NSString *path;
-@property (nonatomic, copy) NSString *chapterTitle;
-
 @property (nonatomic, strong) UILabel *chapterTitleLabel;
 @property (nonatomic, strong) WKWebView *wkWebView;
 @property (nonatomic, strong) UILabel *indexsLabel;
@@ -27,12 +25,12 @@
 @end
 
 @implementation YLBookContentController
-- (instancetype)initWithHtmlPath:(NSString *)path title:(NSString *)title
+- (instancetype)initWithChapter:(YLEpubChapter *)chapter bookPath:(NSString *)bookPath
 {
     if(self = [super init]){
         self.loadStatus = ChapterLoadStatusIdle;
-        self.path = path;
-        self.chapterTitle = title;
+        self.chapter = chapter;
+        self.bookPath = bookPath;
     }
     return self;
 }
@@ -46,9 +44,9 @@
     [self.view addSubview:self.indexsLabel];
     [self.view addSubview:self.indicator];
     
-    self.chapterTitleLabel.text = self.chapterTitle;
-
-    [self loadHtmlWithPath:self.path];
+    self.chapterTitleLabel.text = self.chapter.title;
+    NSString *chapterPath = [NSString stringWithFormat:@"%@/%@", self.bookPath, self.chapter.path];
+    [self loadHtmlWithPath:chapterPath];
     
     //UIPanGestureRecognizer：多列的情况下响应，单列的情况下不响应
     for(UIGestureRecognizer *ges in self.wkWebView.scrollView.gestureRecognizers){
@@ -56,25 +54,6 @@
             [ges addTarget:self action:@selector(handlePan:)];
         }
     }
-
-//    UIScrollViewPagingSwipeGestureRecognizer
-    /*
-     
-     
-     <UIScrollViewDelayedTouchesBeganGestureRecognizer: 0x600003f82600; state = Possible; delaysTouchesBegan = YES; view = <WKScrollView 0x7ff4cc033200>; target= <(action=delayed:, target=<WKScrollView 0x7ff4cc033200>)>>
-    
-     <UIScrollViewPanGestureRecognizer: 0x7ff4cb527810; state = Possible; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=handlePan:, target=<WKScrollView 0x7ff4cc033200>)>; must-fail = {
-             <UIScrollViewPagingSwipeGestureRecognizer: 0x7ff4cb404270; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleSwipe:, target=<WKScrollView 0x7ff4cc033200>)>>
-         }>
-     
-     <UIScrollViewKnobLongPressGestureRecognizer: 0x7ff4cb527e80; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleKnobLongPressGesture:, target=<WKScrollView 0x7ff4cc033200>)>>
-     
-     <_UIDragAutoScrollGestureRecognizer: 0x600003ab87e0; state = Possible; cancelsTouchesInView = NO; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleAutoScroll:, target=<WKScrollView 0x7ff4cc033200>)>>
-     
-     <UIScrollViewPagingSwipeGestureRecognizer: 0x7ff4cb404270; state = Possible; view = <WKScrollView 0x7ff4cc033200>; target= <(action=_handleSwipe:, target=<WKScrollView 0x7ff4cc033200>)>; must-fail-for = {
-             <UIScrollViewPanGestureRecognizer: 0x7ff4cb527810; state = Possible; delaysTouchesEnded = NO; view = <WKScrollView 0x7ff4cc033200>; target= <(action=handlePan:, target=<WKScrollView 0x7ff4cc033200>)>>
-         }>
-     */
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -93,7 +93,7 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
     if(loaded == total){
         //解压完成，解析container.xml
         [SVProgressHUD showWithStatus:@"解析中"];
-        NSString *name = [_bookNames objectAtIndex:self.currentUnZipIndex];
+        NSString *name = [self.bookNames objectAtIndex:self.currentUnZipIndex];
         [self.xmlManager parseXMLAtPath:[YLEpubManager contaierXmlPathForEpubName:name]];
     }
 }
@@ -112,7 +112,6 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 {
     NSString *name = [_bookNames objectAtIndex:self.currentUnZipIndex];
     epub.name = name;
-    
     epub.opsPath = self.opsPath;
     [epub modifyCss];
     [self.eBooks addObject:epub];
@@ -135,8 +134,11 @@ static NSString *cellIdentifiler = @"YLBookShelfCell";
 {
     [SVProgressHUD showProgress:0.0 status:@"加载中"];
     [self.bookNames addObject:@"陈二狗的妖孽人生"];
-    NSString *path = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
-    [YLEpubManager unZipEpubWithPath:path delegate:self];
+    for(NSInteger i = 0; i < self.bookNames.count; i++){
+        self.currentUnZipIndex = i;
+        NSString *path = [[NSBundle mainBundle]pathForResource:self.bookNames[i] ofType:@"epub"];
+        [YLEpubManager unZipEpubWithPath:path delegate:self];
+    }
 }
 
 @end

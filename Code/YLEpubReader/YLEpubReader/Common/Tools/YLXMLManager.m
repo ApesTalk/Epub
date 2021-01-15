@@ -17,8 +17,8 @@ static NSString *package = @"package";
 @property (nonatomic, strong) YLEpub *epub;
 @property (nonatomic, strong) NSMutableDictionary *metadata;///< 元数据
 @property (nonatomic, strong) NSMutableString *valueString;
-@property (nonatomic, strong) NSMutableDictionary *manifest;
-@property (nonatomic, strong) NSMutableArray *spine;
+@property (nonatomic, strong) NSMutableDictionary<NSString* , NSString*> *manifest;
+@property (nonatomic, strong) NSMutableArray<NSString*> *spine;
 @end
 
 @implementation YLXMLManager
@@ -92,12 +92,30 @@ static NSString *package = @"package";
         [self.epub setMetadata:self.metadata];
     }else if ([elementName isEqualToString:@"manifest"]){
         //manifest解析完成
-        self.epub.mainifest = self.manifest;
+        self.epub.manifest = self.manifest.copy;
     }else if ([elementName isEqualToString:@"spine"]){
         //spine解析完成
-        self.epub.spine = self.spine;
+        self.epub.spine = self.spine.copy;
     }else if ([elementName isEqualToString:@"package"]){
         //全部解析完成
+        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:self.spine.count];
+        for(NSUInteger i = 0; i < self.spine.count; i++){
+            NSString *idf = self.spine[i];
+            NSString *href = [self.manifest objectForKey:idf];
+
+            YLEpubChapter *chapter = [[YLEpubChapter alloc]init];
+            chapter.index = i;
+            chapter.title = idf;
+            chapter.path = href;
+            if(i > 0){
+                YLEpubChapter *preChapter = arr[i - 1];
+                preChapter.nextChapter = chapter;
+                chapter.preChapter = preChapter;
+            }
+            [arr addObject:chapter];
+        }
+        self.epub.chapters = arr.copy;
+        
         if([self.delegate respondsToSelector:@selector(xmlManager:didFinishParsing:)]){
             [self.delegate xmlManager:self didFinishParsing:self.epub];
         }

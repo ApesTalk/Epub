@@ -131,7 +131,7 @@
     if(currentChapterVc.currentColumnIndex > 0 ){
         [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex - 1];
     }else{
-        NSInteger index = currentChapterVc.chapterIndex;
+        NSInteger index = currentChapterVc.chapter.index;
         if(index != NSNotFound && index - 1 >= 0){
             YLBookContentController *preChapterVc = [self controllerForIndex:index - 1];
             preChapterVc.goLastPageWhenFinishLoad = YES;
@@ -153,7 +153,7 @@
     if(currentChapterVc.currentColumnIndex < currentChapterVc.maxColumnIndex){
         [currentChapterVc scrollToPageIndex:currentChapterVc.currentColumnIndex + 1];
     }else{
-        NSInteger index = currentChapterVc.chapterIndex;
+        NSInteger index = currentChapterVc.chapter.index;
         if(index != NSNotFound && index + 1 < self.epub.spine.count){
             YLBookContentController *nextChapterVC = [self controllerForIndex:index + 1];
             [self.pageViewController setViewControllers:@[nextChapterVC] direction:UIPageViewControllerNavigationDirectionForward animated:YES completion:nil];
@@ -166,7 +166,7 @@
 {
     YLBookContentController *currentChapterVc = (YLBookContentController *)viewController;
     if(currentChapterVc.currentColumnIndex == 0){
-        NSInteger index = currentChapterVc.chapterIndex;
+        NSInteger index = currentChapterVc.chapter.index;
         if(index != NSNotFound && index - 1 >= 0){
             YLBookContentController *preChapterVc = [self controllerForIndex:index - 1];
             preChapterVc.goLastPageWhenFinishLoad = YES;
@@ -182,7 +182,7 @@
 {
     YLBookContentController *currentChapterVc = (YLBookContentController *)viewController;
     if(currentChapterVc.currentColumnIndex == currentChapterVc.maxColumnIndex){
-        NSInteger index = currentChapterVc.chapterIndex;
+        NSInteger index = currentChapterVc.chapter.index;
         if(index != NSNotFound && index + 1 < self.epub.spine.count){
             return [self controllerForIndex:index + 1];
         }
@@ -201,7 +201,7 @@
 {
     if(finished){
         YLBookContentController *vc = (YLBookContentController *)[pageViewController.viewControllers firstObject];
-        self.currentChapterIndex = vc.chapterIndex;
+        self.currentChapterIndex = vc.chapter.index;
     }
 }
 
@@ -224,13 +224,9 @@
     }
     
     //create a new vc
-    NSString *idref = [self.epub.spine objectAtIndex:index];
-    NSString *href = [self.epub.mainifest objectForKey:idref];
-    self.title = idref;
-    NSString *htmlPath = [NSString stringWithFormat:@"%@%@", self.epub.opsPath, href];
-    YLBookContentController *contentVc = [[YLBookContentController alloc] initWithHtmlPath:htmlPath title:idref];
-    contentVc.bookPath = self.epub.localBookContentPath;
-    contentVc.chapterIndex = index;
+    YLEpubChapter *chaper = self.epub.chapters[index];
+    self.title = chaper.title;
+    YLBookContentController *contentVc = [[YLBookContentController alloc] initWithChapter:chaper bookPath:self.epub.opsPath];
     contentVc.delegate = self;
     return contentVc;
 }
