@@ -30,10 +30,7 @@
 //    [self.view addSubview:textView];
 //    return;
     
-//    NSString *filePath = [[NSBundle mainBundle]pathForResource:@"陈二狗的妖孽人生" ofType:@"epub"];
-//    YLEpub *epub = [[YLEpub alloc]initWithName:@"陈二狗的妖孽人生" filePath:filePath];
-//    BOOL b = [YLEpubManager unZipEpubWithPath:filePath delegate:self];
-//    epub.unZipedPath = [YLEpubManager unZipedPathForEpub:epub];
+
     
     UIWebView *webView = [[UIWebView alloc]initWithFrame:self.view.bounds];
     webView.backgroundColor = [UIColor whiteColor];
@@ -87,12 +84,6 @@
 {
     NSLog(@"zip loaded=%llu ,total=%llu",loaded, total);
     //这里处理进度
-}
-
-#pragma mark---YLXMLManagerDelegate
-- (void)xmlManager:(YLXMLManager *)manager didFoundFullPath:(NSString *)fullPath
-{
-//    NSString *opsFolderPath = [YLEpubManager unZipedPathForEpub:]
 }
 
 #pragma mark---UIPageViewControllerDataSource

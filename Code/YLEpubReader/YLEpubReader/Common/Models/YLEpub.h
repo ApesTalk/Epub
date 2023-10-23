@@ -7,15 +7,7 @@
 //  电子书
 
 #import <Foundation/Foundation.h>
-
-@interface YLEpubChapter : NSObject
-@property (nonatomic, assign) NSUInteger index;
-@property (nonatomic, copy) NSString *title;
-@property (nonatomic, copy) NSString *path;///< 非完整路径，完整路径需在前面拼接opsPath
-@property (nonatomic, strong) YLEpubChapter *preChapter;
-@property (nonatomic, strong) YLEpubChapter *nextChapter;
-@end
-
+@class YLEpubChapter;
 
 @interface YLEpub : NSObject
 @property (nonatomic, copy) NSString *fileId;
@@ -40,8 +32,8 @@
 @property (nonatomic, copy) NSString *builderVersion;
 
 @property (nonatomic, copy) NSString *filePath;///< 本地文件路径
-@property (nonatomic, copy) NSString *unZipedPath;///< 解压后的路径
-@property (nonatomic, copy) NSString *opsPath;///< ops文件夹路径，以'/'结尾。 ex:xxx/xxx/OPS/
+//@property (nonatomic, copy) NSString *unZipedPath;///< 解压后的路径
+@property (nonatomic, copy) NSString *opsFolderPath;///< ops文件夹路径，以'/'结尾。 ex:xxx/xxx/OPS/
 @property (nonatomic, copy) NSDictionary<NSString* , NSString*> *manifest;///< 清单
 @property (nonatomic, copy) NSArray<NSString*> *spine;///< 书脊
 
@@ -53,4 +45,14 @@
 - (void)setMetadata:(NSDictionary *)metadata;
 - (NSString *)coverPath;///< 封面图路径
 - (void)modifyCss;///< 修改css样式
+
+
+/*
+- (void)saveBook;//保存书本，包括阅读记录，笔记，书签等
+- (void)deleteNote:(XDSNoteModel *)noteModel;
+- (void)addNote:(XDSNoteModel *)noteModel;
+
+- (void)deleteMark:(XDSMarkModel *)markModel;
+- (void)addMark:(XDSMarkModel *)markModel;
+ */
 @end

@@ -9,8 +9,8 @@
 #import "YLFlipPushTransition.h"
 
 @interface YLFlipPushTransition()
-@property (nonatomic, strong) UIView *fromView;
-@property (nonatomic, strong) UIView *toView;
+@property (nonatomic, weak) UIView *fromView;
+@property (nonatomic, weak) UIView *toView;
 @end
 
 @implementation YLFlipPushTransition
@@ -52,7 +52,7 @@
     [containerView addSubview:toVC.view];
     [containerView addSubview:snapShotView];
     
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         toVC.view.alpha = 1.0;
         snapShotView.frame = [UIScreen mainScreen].bounds;
     } completion:^(BOOL finished) {
@@ -64,7 +64,7 @@
         snapShotView.layer.anchorPoint = CGPointMake(0.0, 0.5);
         snapShotView.frame = oldFrame;
 
-        [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             snapShotView.transform = CGAffineTransformScale(CGAffineTransformIdentity, -0.5, 1.0);
         } completion:^(BOOL finished) {
             [snapShotView removeFromSuperview];

@@ -9,8 +9,8 @@
 #import "YLFlipPopTransition.h"
 
 @interface YLFlipPopTransition()
-@property (nonatomic, strong) UIView *fromView;
-@property (nonatomic, strong) UIView *toView;
+@property (nonatomic, weak) UIView *fromView;
+@property (nonatomic, weak) UIView *toView;
 @end
 
 
@@ -61,12 +61,12 @@
     snapShotView.frame = oldFrame;
     snapShotView.transform = CGAffineTransformScale(self.fromView.transform, -0.5, 1.0);
 
-    [UIView animateWithDuration:0.15 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseIn animations:^{
         snapShotView.transform = CGAffineTransformScale(self.fromView.transform, 1.0, 1.0);
     } completion:^(BOOL finished) {
         self.toView.hidden = NO;
         self.fromView.hidden = NO;
-        [UIView animateWithDuration:0.35 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             toVC.view.alpha = 1;
             snapShotView.frame = [containerView convertRect:self.toView.frame fromView:self.toView.superview];
         } completion:^(BOOL finished) {

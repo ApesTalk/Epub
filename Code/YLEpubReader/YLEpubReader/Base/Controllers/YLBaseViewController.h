@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol CustomTransitionController <NSObject>
+@property (nonatomic, strong) UIView *transitionView;
+@end
+
 @interface YLBaseViewController : UIViewController
 
 @end

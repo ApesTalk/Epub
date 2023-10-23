@@ -9,22 +9,20 @@
 #import "YLNavigationDelegate.h"
 #import "YLFlipPushTransition.h"
 #import "YLFlipPopTransition.h"
-#import "YLBookShelfController.h"
-#import "YLBookReadController.h"
+#import "YLBaseViewController.h"
 
 @implementation YLNavigationDelegate
 #pragma mark ---UINavigationControllerDelegate
 - (id<UIViewControllerAnimatedTransitioning>)navigationController:(UINavigationController *)navigationController animationControllerForOperation:(UINavigationControllerOperation)operation fromViewController:(UIViewController *)fromVC toViewController:(UIViewController *)toVC
 {
-    if(operation == UINavigationControllerOperationPush &&
-       [fromVC isKindOfClass:[YLBookShelfController class]] &&
-       [toVC isKindOfClass:[YLBookReadController class]]){
-        YLFlipPushTransition *transition = [[YLFlipPushTransition alloc]initWithFromView:((YLBookShelfController*)fromVC).transitionView toView:((YLBookReadController*)toVC).transitionView];
+    if(![fromVC conformsToProtocol:@protocol(CustomTransitionController)] || ![toVC conformsToProtocol:@protocol(CustomTransitionController)]) return nil;
+    UIView *fromView = [fromVC performSelector:@selector(transitionView)];
+    UIView *toView = [toVC performSelector:@selector(transitionView)];
+    if(operation == UINavigationControllerOperationPush){
+        YLFlipPushTransition *transition = [[YLFlipPushTransition alloc] initWithFromView:fromView toView:toView];
         return transition;
-    }else if(operation == UINavigationControllerOperationPop &&
-             [fromVC isKindOfClass:[YLBookReadController class]] &&
-             [toVC isKindOfClass:[YLBookShelfController class]]){
-        YLFlipPopTransition *transition = [[YLFlipPopTransition alloc]initWithFromView:((YLBookReadController*)fromVC).transitionView toView:((YLBookShelfController*)toVC).transitionView];
+    }else if(operation == UINavigationControllerOperationPop){
+        YLFlipPopTransition *transition = [[YLFlipPopTransition alloc] initWithFromView:fromView toView:toView];
         return transition;
     }
     return nil;

@@ -21,6 +21,7 @@
     [[UINavigationBar appearance] setTitleTextAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20], NSForegroundColorAttributeName: [UIColor blackColor]}];
     _naviDelegate = [YLNavigationDelegate new];
     self.delegate = _naviDelegate;
+//    self.navigationBar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning {

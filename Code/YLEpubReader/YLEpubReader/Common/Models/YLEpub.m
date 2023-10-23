@@ -10,10 +10,8 @@
 #import "YLEpubManager.h"
 #import "YLStatics.h"
 #import <UIKit/UIKit.h>
-
-@implementation YLEpubChapter
-@end
-
+#import "YLReadManager.h"
+#import "YLEpubChapter.h"
 
 @implementation YLEpub
 - (instancetype)initWithName:(NSString *)name filePath:(NSString *)path
@@ -74,8 +72,8 @@
     if(coverImage.length == 0){
         coverImage = [self.manifest objectForKey:@"cover_img"];
     }
-    if(coverImage && self.opsPath){
-        NSString *path = [NSString stringWithFormat:@"%@%@", self.opsPath, coverImage];
+    if(coverImage && self.opsFolderPath){
+        NSString *path = [NSString stringWithFormat:@"%@%@", self.opsFolderPath, coverImage];
         return path;
     }
     return nil;
@@ -83,7 +81,7 @@
 
 - (NSString *)localBookContentPath
 {
-    return self.opsPath;
+    return self.opsFolderPath;
 //    return [YLEpubManager unZipedFolderPathForEpubName:self.name?:@""];
 }
 
@@ -104,8 +102,8 @@
     if(!cssFile){
         NSLog(@"!!!!: %@ 未找到css文件", self.name);
     }
-    if(self.opsPath && self.manifest && cssFile){
-        NSString *cssPath = [NSString stringWithFormat:@"%@%@", self.opsPath, cssFile];
+    if(self.opsFolderPath && self.manifest && cssFile){
+        NSString *cssPath = [NSString stringWithFormat:@"%@%@", self.opsFolderPath, cssFile];
         NSError *error;
         NSString *cssStr = [[NSString alloc]initWithContentsOfFile:cssPath encoding:NSUTF8StringEncoding error:&error];
         if(error || [cssStr containsString:kBookContentDiv]){
@@ -185,5 +183,30 @@
         NSLog(@"error=%@", error);
     }
 }
+
+
+//- (void)loadContentForAllChapters {
+//    NSInteger index = [self.chapters indexOfObject:CURRENT_RECORD.chapterModel];
+//    if (index == 0 || index + 1 >= self.chapters.count) {
+//        return;
+//    }
+//
+//    dispatch_queue_t queue = dispatch_queue_create("loadContentForAllChapters", DISPATCH_QUEUE_SERIAL);
+//    for (NSInteger i = index + 1; i < self.chapters.count; i ++) {
+//        XDSChapterModel *theChapterModel = self.chapters[i];
+//        dispatch_async(queue, ^{
+//            [self loadContentInChapter:theChapterModel];
+//        });
+//
+//    }
+//
+//    for (NSInteger i = index - 1; i >= 0; i --) {
+//        XDSChapterModel *theChapterModel = self.chapters[i];
+//        dispatch_async(queue, ^{
+//            [self loadContentInChapter:theChapterModel];
+//        });
+//    }
+//
+//}
 
 @end

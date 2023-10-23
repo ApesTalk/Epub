@@ -15,5 +15,53 @@
             stopOnStyle = "1">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "44CE7E23-FBCD-4554-B2F0-26F353917240"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Pods/DTCoreText/Core/Source/DTAttributedTextView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "302"
+            endingLineNumber = "302"
+            landmarkName = "-backgroundView"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "44CE7E23-FBCD-4554-B2F0-26F353917240 - 43480606ac3ade49"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DTAttributedTextView setContentInset:]"
+                  moduleName = "EpubReader"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lumin/%E4%B8%AA%E4%BA%BA/Epub/Code/YLEpubReader/Pods/DTCoreText/Core/Source/DTAttributedTextView.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "302"
+                  endingLineNumber = "302"
+                  offsetFromSymbolStart = "424">
+               </Location>
+               <Location
+                  uuid = "44CE7E23-FBCD-4554-B2F0-26F353917240 - 70badc006ef159e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[DTAttributedTextView backgroundView]"
+                  moduleName = "EpubReader"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/lumin/%E4%B8%AA%E4%BA%BA/Epub/Code/YLEpubReader/Pods/DTCoreText/Core/Source/DTAttributedTextView.m"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "302"
+                  endingLineNumber = "302"
+                  offsetFromSymbolStart = "244">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

@@ -9,7 +9,11 @@
 /* Begin PBXBuildFile section */
 		6326EB1B0CBCD4FD82646FE5 /* libPods-YLEpubReaderUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78F2FA183F137B79791BB807 /* libPods-YLEpubReaderUITests.a */; };
 		6D058CA5208C6DCC00340A49 /* UIView+AOP.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D058CA3208C6DCC00340A49 /* UIView+AOP.m */; };
-		6D261CDD2249187000EA85B4 /* YLCatalogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D261CDC2249187000EA85B4 /* YLCatalogController.m */; };
+		6D0F2F812A8DBDAA00EB1502 /* YLCoreTextReadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F2F802A8DBDAA00EB1502 /* YLCoreTextReadController.m */; };
+		6D0F2F842A8DBDBC00EB1502 /* YLCoreTextContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F2F832A8DBDBC00EB1502 /* YLCoreTextContentController.m */; };
+		6D0F2F872A8DC2A100EB1502 /* YLCoreTextReadView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F2F862A8DC2A100EB1502 /* YLCoreTextReadView.m */; };
+		6D0F2F8A2A8DE59400EB1502 /* YLEpubChapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F2F892A8DE59400EB1502 /* YLEpubChapter.m */; };
+		6D0F2F8D2A8DE8BB00EB1502 /* YLReadManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0F2F8C2A8DE8BB00EB1502 /* YLReadManager.m */; };
 		6D39040A2071D15B00348EAE /* column.html in Resources */ = {isa = PBXBuildFile; fileRef = 6D3904092071D15B00348EAE /* column.html */; };
 		6D4C1E6F2070E0BE00F897E4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */; };
 		6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D4C1E712070E0BE00F897E4 /* ViewController.m */; };
@@ -24,13 +28,15 @@
 		6D5D85B72082E52900D8D902 /* YLXMLManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85B62082E52900D8D902 /* YLXMLManager.m */; };
 		6D5D85BE2082F60C00D8D902 /* YLBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85BD2082F60C00D8D902 /* YLBaseViewController.m */; };
 		6D5D85C12082F62300D8D902 /* YLNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85C02082F62300D8D902 /* YLNavigationController.m */; };
-		6D5D85C42082F64700D8D902 /* YLBookShelfController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85C32082F64700D8D902 /* YLBookShelfController.m */; };
-		6D5D85C72082FA8900D8D902 /* YLBookShelfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85C62082FA8900D8D902 /* YLBookShelfCell.m */; };
-		6D5D85CB208390EA00D8D902 /* YLBookReadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85CA208390EA00D8D902 /* YLBookReadController.m */; };
-		6D5D85CE2083915000D8D902 /* YLBookContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D5D85CD2083915000D8D902 /* YLBookContentController.m */; };
 		6D633ACB24907C5100585FD3 /* YLNavigationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633ACA24907C5100585FD3 /* YLNavigationDelegate.m */; };
 		6D633ACE24907CB200585FD3 /* YLFlipPushTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633ACD24907CB200585FD3 /* YLFlipPushTransition.m */; };
 		6D633AD124907CC400585FD3 /* YLFlipPopTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D633AD024907CC400585FD3 /* YLFlipPopTransition.m */; };
+		6DA039FD2A8CD80700C0B923 /* YLBookReadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA039F22A8CD80700C0B923 /* YLBookReadController.m */; };
+		6DA039FE2A8CD80700C0B923 /* YLCatalogController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA039F72A8CD80700C0B923 /* YLCatalogController.m */; };
+		6DA039FF2A8CD80700C0B923 /* YLBookContentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA039F82A8CD80700C0B923 /* YLBookContentController.m */; };
+		6DA03A002A8CD80700C0B923 /* YLBookShelfController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA039F92A8CD80700C0B923 /* YLBookShelfController.m */; };
+		6DA03A012A8CD80700C0B923 /* YLBookShelfCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DA039FC2A8CD80700C0B923 /* YLBookShelfCell.m */; };
+		6DAB9AFC2A8F5CC50069F048 /* 算法图解.epub in Resources */ = {isa = PBXBuildFile; fileRef = 6DAB9AFB2A8F5CC50069F048 /* 算法图解.epub */; };
 		6DF981D4207C693F009AE2C0 /* chapter_269231114.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */; };
 		6DF981D6207C6A1C009AE2C0 /* stylesheet.css in Resources */ = {isa = PBXBuildFile; fileRef = 6DF981D5207C6A1C009AE2C0 /* stylesheet.css */; };
 		7F9E4232F1B439C521320F0F /* libPods-YLEpubReaderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FE6E0CD90F7F8F2CFAC6FF6B /* libPods-YLEpubReaderTests.a */; };
@@ -61,8 +67,16 @@
 		60ADB4485AE588B3C7BA0BAD /* Pods-YLEpubReader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReader.release.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader.release.xcconfig"; sourceTree = "<group>"; };
 		6D058CA3208C6DCC00340A49 /* UIView+AOP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+AOP.m"; sourceTree = "<group>"; };
 		6D058CA4208C6DCC00340A49 /* UIView+AOP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+AOP.h"; sourceTree = "<group>"; };
-		6D261CDB2249187000EA85B4 /* YLCatalogController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCatalogController.h; sourceTree = "<group>"; };
-		6D261CDC2249187000EA85B4 /* YLCatalogController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCatalogController.m; sourceTree = "<group>"; };
+		6D0F2F7F2A8DBDAA00EB1502 /* YLCoreTextReadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCoreTextReadController.h; sourceTree = "<group>"; };
+		6D0F2F802A8DBDAA00EB1502 /* YLCoreTextReadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCoreTextReadController.m; sourceTree = "<group>"; };
+		6D0F2F822A8DBDBC00EB1502 /* YLCoreTextContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCoreTextContentController.h; sourceTree = "<group>"; };
+		6D0F2F832A8DBDBC00EB1502 /* YLCoreTextContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCoreTextContentController.m; sourceTree = "<group>"; };
+		6D0F2F852A8DC2A100EB1502 /* YLCoreTextReadView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLCoreTextReadView.h; sourceTree = "<group>"; };
+		6D0F2F862A8DC2A100EB1502 /* YLCoreTextReadView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLCoreTextReadView.m; sourceTree = "<group>"; };
+		6D0F2F882A8DE59400EB1502 /* YLEpubChapter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLEpubChapter.h; sourceTree = "<group>"; };
+		6D0F2F892A8DE59400EB1502 /* YLEpubChapter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLEpubChapter.m; sourceTree = "<group>"; };
+		6D0F2F8B2A8DE8BB00EB1502 /* YLReadManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLReadManager.h; sourceTree = "<group>"; };
+		6D0F2F8C2A8DE8BB00EB1502 /* YLReadManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLReadManager.m; sourceTree = "<group>"; };
 		6D3904092071D15B00348EAE /* column.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = column.html; sourceTree = "<group>"; };
 		6D4C1E6A2070E0BE00F897E4 /* EpubReader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EpubReader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,21 +105,24 @@
 		6D5D85BD2082F60C00D8D902 /* YLBaseViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBaseViewController.m; sourceTree = "<group>"; };
 		6D5D85BF2082F62300D8D902 /* YLNavigationController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLNavigationController.h; sourceTree = "<group>"; };
 		6D5D85C02082F62300D8D902 /* YLNavigationController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLNavigationController.m; sourceTree = "<group>"; };
-		6D5D85C22082F64700D8D902 /* YLBookShelfController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBookShelfController.h; sourceTree = "<group>"; };
-		6D5D85C32082F64700D8D902 /* YLBookShelfController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookShelfController.m; sourceTree = "<group>"; };
-		6D5D85C52082FA8900D8D902 /* YLBookShelfCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBookShelfCell.h; sourceTree = "<group>"; };
-		6D5D85C62082FA8900D8D902 /* YLBookShelfCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookShelfCell.m; sourceTree = "<group>"; };
 		6D5D85C82083464800D8D902 /* YLStatics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLStatics.h; sourceTree = "<group>"; };
-		6D5D85C9208390EA00D8D902 /* YLBookReadController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBookReadController.h; sourceTree = "<group>"; };
-		6D5D85CA208390EA00D8D902 /* YLBookReadController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookReadController.m; sourceTree = "<group>"; };
-		6D5D85CC2083915000D8D902 /* YLBookContentController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLBookContentController.h; sourceTree = "<group>"; };
-		6D5D85CD2083915000D8D902 /* YLBookContentController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLBookContentController.m; sourceTree = "<group>"; };
 		6D633AC924907C5100585FD3 /* YLNavigationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLNavigationDelegate.h; sourceTree = "<group>"; };
 		6D633ACA24907C5100585FD3 /* YLNavigationDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLNavigationDelegate.m; sourceTree = "<group>"; };
 		6D633ACC24907CB200585FD3 /* YLFlipPushTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFlipPushTransition.h; sourceTree = "<group>"; };
 		6D633ACD24907CB200585FD3 /* YLFlipPushTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFlipPushTransition.m; sourceTree = "<group>"; };
 		6D633ACF24907CC400585FD3 /* YLFlipPopTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YLFlipPopTransition.h; sourceTree = "<group>"; };
 		6D633AD024907CC400585FD3 /* YLFlipPopTransition.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YLFlipPopTransition.m; sourceTree = "<group>"; };
+		6DA039F22A8CD80700C0B923 /* YLBookReadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBookReadController.m; sourceTree = "<group>"; };
+		6DA039F32A8CD80700C0B923 /* YLCatalogController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLCatalogController.h; sourceTree = "<group>"; };
+		6DA039F42A8CD80700C0B923 /* YLBookShelfController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBookShelfController.h; sourceTree = "<group>"; };
+		6DA039F52A8CD80700C0B923 /* YLBookContentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBookContentController.h; sourceTree = "<group>"; };
+		6DA039F62A8CD80700C0B923 /* YLBookReadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBookReadController.h; sourceTree = "<group>"; };
+		6DA039F72A8CD80700C0B923 /* YLCatalogController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLCatalogController.m; sourceTree = "<group>"; };
+		6DA039F82A8CD80700C0B923 /* YLBookContentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBookContentController.m; sourceTree = "<group>"; };
+		6DA039F92A8CD80700C0B923 /* YLBookShelfController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBookShelfController.m; sourceTree = "<group>"; };
+		6DA039FB2A8CD80700C0B923 /* YLBookShelfCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YLBookShelfCell.h; sourceTree = "<group>"; };
+		6DA039FC2A8CD80700C0B923 /* YLBookShelfCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YLBookShelfCell.m; sourceTree = "<group>"; };
+		6DAB9AFB2A8F5CC50069F048 /* 算法图解.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "算法图解.epub"; sourceTree = "<group>"; };
 		6DF981D3207C693F009AE2C0 /* chapter_269231114.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chapter_269231114.xhtml; sourceTree = "<group>"; };
 		6DF981D5207C6A1C009AE2C0 /* stylesheet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = stylesheet.css; sourceTree = "<group>"; };
 		7110E20966599E6D73A299BD /* Pods-YLEpubReader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YLEpubReader.debug.xcconfig"; path = "Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,8 +190,9 @@
 			children = (
 				6D5D85B82082F5F500D8D902 /* Base */,
 				6D5D85A72082373A00D8D902 /* Common */,
+				6DA039F02A8CD80600C0B923 /* WebViewEpub */,
+				6DA03A022A8CD85E00C0B923 /* CoreText */,
 				6D5D85AC2082373A00D8D902 /* EpubFiles */,
-				6D5D85A32082373A00D8D902 /* WebViewEpub */,
 				6D4C1E6D2070E0BE00F897E4 /* AppDelegate.h */,
 				6D4C1E6E2070E0BE00F897E4 /* AppDelegate.m */,
 				6D4C1E702070E0BE00F897E4 /* ViewController.h */,
@@ -184,16 +202,6 @@
 				6D4C1E7C2070E0BE00F897E4 /* main.m */,
 				6D4C1E9F2070E2E000F897E4 /* YLTestViewController.h */,
 				6D4C1EA02070E2E000F897E4 /* YLTestViewController.m */,
-				6D5D85C22082F64700D8D902 /* YLBookShelfController.h */,
-				6D5D85C32082F64700D8D902 /* YLBookShelfController.m */,
-				6D5D85C52082FA8900D8D902 /* YLBookShelfCell.h */,
-				6D5D85C62082FA8900D8D902 /* YLBookShelfCell.m */,
-				6D5D85C9208390EA00D8D902 /* YLBookReadController.h */,
-				6D5D85CA208390EA00D8D902 /* YLBookReadController.m */,
-				6D5D85CC2083915000D8D902 /* YLBookContentController.h */,
-				6D5D85CD2083915000D8D902 /* YLBookContentController.m */,
-				6D261CDB2249187000EA85B4 /* YLCatalogController.h */,
-				6D261CDC2249187000EA85B4 /* YLCatalogController.m */,
 			);
 			path = YLEpubReader;
 			sourceTree = "<group>";
@@ -216,37 +224,6 @@
 			path = YLEpubReaderUITests;
 			sourceTree = "<group>";
 		};
-		6D5D85A32082373A00D8D902 /* WebViewEpub */ = {
-			isa = PBXGroup;
-			children = (
-				6D5D85A42082373A00D8D902 /* Controllers */,
-				6D5D85A52082373A00D8D902 /* Models */,
-				6D5D85A62082373A00D8D902 /* Views */,
-			);
-			path = WebViewEpub;
-			sourceTree = "<group>";
-		};
-		6D5D85A42082373A00D8D902 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		6D5D85A52082373A00D8D902 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		6D5D85A62082373A00D8D902 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		6D5D85A72082373A00D8D902 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -262,6 +239,10 @@
 			children = (
 				6D5D85B22082400600D8D902 /* YLEpub.h */,
 				6D5D85B32082400600D8D902 /* YLEpub.m */,
+				6D0F2F882A8DE59400EB1502 /* YLEpubChapter.h */,
+				6D0F2F892A8DE59400EB1502 /* YLEpubChapter.m */,
+				6D0F2F8B2A8DE8BB00EB1502 /* YLReadManager.h */,
+				6D0F2F8C2A8DE8BB00EB1502 /* YLReadManager.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -291,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				6D5D85AD208239A200D8D902 /* 陈二狗的妖孽人生.epub */,
+				6DAB9AFB2A8F5CC50069F048 /* 算法图解.epub */,
 			);
 			path = EpubFiles;
 			sourceTree = "<group>";
@@ -328,6 +310,68 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		6DA039F02A8CD80600C0B923 /* WebViewEpub */ = {
+			isa = PBXGroup;
+			children = (
+				6DA039F12A8CD80700C0B923 /* Controllers */,
+				6DA039FA2A8CD80700C0B923 /* Views */,
+			);
+			path = WebViewEpub;
+			sourceTree = "<group>";
+		};
+		6DA039F12A8CD80700C0B923 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6DA039F42A8CD80700C0B923 /* YLBookShelfController.h */,
+				6DA039F92A8CD80700C0B923 /* YLBookShelfController.m */,
+				6DA039F62A8CD80700C0B923 /* YLBookReadController.h */,
+				6DA039F22A8CD80700C0B923 /* YLBookReadController.m */,
+				6DA039F52A8CD80700C0B923 /* YLBookContentController.h */,
+				6DA039F82A8CD80700C0B923 /* YLBookContentController.m */,
+				6DA039F32A8CD80700C0B923 /* YLCatalogController.h */,
+				6DA039F72A8CD80700C0B923 /* YLCatalogController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6DA039FA2A8CD80700C0B923 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6DA039FB2A8CD80700C0B923 /* YLBookShelfCell.h */,
+				6DA039FC2A8CD80700C0B923 /* YLBookShelfCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6DA03A022A8CD85E00C0B923 /* CoreText */ = {
+			isa = PBXGroup;
+			children = (
+				6DA03A032A8CD85E00C0B923 /* Controllers */,
+				6DA03A042A8CD85E00C0B923 /* Views */,
+			);
+			path = CoreText;
+			sourceTree = "<group>";
+		};
+		6DA03A032A8CD85E00C0B923 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				6D0F2F7F2A8DBDAA00EB1502 /* YLCoreTextReadController.h */,
+				6D0F2F802A8DBDAA00EB1502 /* YLCoreTextReadController.m */,
+				6D0F2F822A8DBDBC00EB1502 /* YLCoreTextContentController.h */,
+				6D0F2F832A8DBDBC00EB1502 /* YLCoreTextContentController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		6DA03A042A8CD85E00C0B923 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				6D0F2F852A8DC2A100EB1502 /* YLCoreTextReadView.h */,
+				6D0F2F862A8DC2A100EB1502 /* YLCoreTextReadView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		8B6A064A4169B58137ACBE2E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -362,7 +406,6 @@
 				6D4C1E662070E0BE00F897E4 /* Sources */,
 				6D4C1E672070E0BE00F897E4 /* Frameworks */,
 				6D4C1E682070E0BE00F897E4 /* Resources */,
-				71757DAA598EC851A1A20FB3 /* [CP] Embed Pods Frameworks */,
 				D189F64E587636366A26E1C2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -382,8 +425,6 @@
 				6D4C1E7E2070E0BE00F897E4 /* Sources */,
 				6D4C1E7F2070E0BE00F897E4 /* Frameworks */,
 				6D4C1E802070E0BE00F897E4 /* Resources */,
-				A474B1A07C2BAD8E6A50739C /* [CP] Embed Pods Frameworks */,
-				5B7E06AD0FC6B47A8A906A48 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -403,8 +444,6 @@
 				6D4C1E892070E0BE00F897E4 /* Sources */,
 				6D4C1E8A2070E0BE00F897E4 /* Frameworks */,
 				6D4C1E8B2070E0BE00F897E4 /* Resources */,
-				EFEC660E55443517DCD4E07F /* [CP] Embed Pods Frameworks */,
-				45CE8828259C1DC40B3D77E5 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -470,6 +509,7 @@
 				6DF981D4207C693F009AE2C0 /* chapter_269231114.xhtml in Resources */,
 				6D5D85AE208239A200D8D902 /* 陈二狗的妖孽人生.epub in Resources */,
 				6D4C1E772070E0BE00F897E4 /* Assets.xcassets in Resources */,
+				6DAB9AFC2A8F5CC50069F048 /* 算法图解.epub in Resources */,
 				6DF981D6207C6A1C009AE2C0 /* stylesheet.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -491,79 +531,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		45CE8828259C1DC40B3D77E5 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReaderUITests/Pods-YLEpubReaderUITests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5B7E06AD0FC6B47A8A906A48 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReaderTests/Pods-YLEpubReaderTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		71757DAA598EC851A1A20FB3 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8DC3EA3155B098CE4617EC23 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YLEpubReaderTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		A474B1A07C2BAD8E6A50739C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReaderTests/Pods-YLEpubReaderTests-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CD0FA859116C0B84772C8A5E /* [CP] Check Pods Manifest.lock */ = {
@@ -572,13 +555,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YLEpubReaderUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D189F64E587636366A26E1C2 /* [CP] Copy Pods Resources */ = {
@@ -587,28 +573,18 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/MWPhotoBrowser/MWPhotoBrowser.bundle",
+				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/MWPhotoBrowser.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EFEC660E55443517DCD4E07F /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-YLEpubReaderUITests/Pods-YLEpubReaderUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YLEpubReader/Pods-YLEpubReader-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F6BCB1127C683E6FFAA12CCC /* [CP] Check Pods Manifest.lock */ = {
@@ -617,13 +593,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YLEpubReader-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -633,23 +612,28 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DA039FE2A8CD80700C0B923 /* YLCatalogController.m in Sources */,
 				6D633ACE24907CB200585FD3 /* YLFlipPushTransition.m in Sources */,
-				6D261CDD2249187000EA85B4 /* YLCatalogController.m in Sources */,
+				6D0F2F872A8DC2A100EB1502 /* YLCoreTextReadView.m in Sources */,
+				6D0F2F842A8DBDBC00EB1502 /* YLCoreTextContentController.m in Sources */,
+				6DA03A012A8CD80700C0B923 /* YLBookShelfCell.m in Sources */,
 				6D633ACB24907C5100585FD3 /* YLNavigationDelegate.m in Sources */,
+				6D0F2F812A8DBDAA00EB1502 /* YLCoreTextReadController.m in Sources */,
+				6D0F2F8D2A8DE8BB00EB1502 /* YLReadManager.m in Sources */,
+				6DA039FF2A8CD80700C0B923 /* YLBookContentController.m in Sources */,
 				6D5D85BE2082F60C00D8D902 /* YLBaseViewController.m in Sources */,
-				6D5D85CB208390EA00D8D902 /* YLBookReadController.m in Sources */,
-				6D5D85CE2083915000D8D902 /* YLBookContentController.m in Sources */,
 				6D633AD124907CC400585FD3 /* YLFlipPopTransition.m in Sources */,
+				6D0F2F8A2A8DE59400EB1502 /* YLEpubChapter.m in Sources */,
 				6D058CA5208C6DCC00340A49 /* UIView+AOP.m in Sources */,
+				6DA03A002A8CD80700C0B923 /* YLBookShelfController.m in Sources */,
 				6D5D85B42082400600D8D902 /* YLEpub.m in Sources */,
 				6D4C1E722070E0BE00F897E4 /* ViewController.m in Sources */,
 				6D4C1EA12070E2E000F897E4 /* YLTestViewController.m in Sources */,
 				6D4C1E7D2070E0BE00F897E4 /* main.m in Sources */,
 				6D5D85C12082F62300D8D902 /* YLNavigationController.m in Sources */,
 				6D5D85B120823A8900D8D902 /* YLEpubManager.m in Sources */,
+				6DA039FD2A8CD80700C0B923 /* YLBookReadController.m in Sources */,
 				6D4C1E6F2070E0BE00F897E4 /* AppDelegate.m in Sources */,
-				6D5D85C72082FA8900D8D902 /* YLBookShelfCell.m in Sources */,
-				6D5D85C42082F64700D8D902 /* YLBookShelfController.m in Sources */,
 				6D5D85B72082E52900D8D902 /* YLXMLManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

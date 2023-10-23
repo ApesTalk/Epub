@@ -11,13 +11,21 @@
 @class YLXMLManager;
 @class YLEpub;
 @protocol YLXMLManagerDelegate <NSObject>
-- (void)xmlManager:(YLXMLManager *)manager didFoundFullPath:(NSString *)fullPath;
 - (void)xmlManager:(YLXMLManager *)manager failedParseWithError:(NSError *)error;
-- (void)xmlManager:(YLXMLManager *)manager didFinishParsing:(YLEpub *)epub;
+- (void)xmlManagerFinishParse:(YLXMLManager *)manager;
 @end
 
+typedef NS_ENUM(NSInteger, ParseType) {
+    ParseTypeContainer,
+    ParseTypeOPF,
+    ParseTypeNCX
+};
 
 @interface YLXMLManager : NSObject
+@property (nonatomic, assign, readonly) ParseType parseType;
+@property (nonatomic, strong, readonly) NSString *opfPath;///< 相对路径
+@property (nonatomic, strong, readonly) NSString *ncxPath;///< 相对路径
+@property (nonatomic, strong, readonly) YLEpub *epub;
 @property (nonatomic, weak) id<YLXMLManagerDelegate> delegate;
 - (void)parseXMLAtPath:(NSString *)xmlPath;
 @end

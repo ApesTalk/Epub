@@ -27,10 +27,15 @@
 #define kBookContentDiv @"yl_bookcontent"
 #define kCSSPaddingLeft 20
 #define kCSSPaddingRight 20
+#define kCSSPaddingBottom 20
+#define kCSSPaddingTop 20
 
 #define kEpubViewBottomGap (kIsX ? 0 : 20)
 
 #define kEpubViewWidth kScreenWidth
 #define kEpubViewHeight (kScreenHeight - kStatusAndNavigationBarHeight - kHomeIndicatorHeight - kEpubViewBottomGap)
+
+#define kEpubFontSize 15
+#define kEpubFontColor [UIColor blackColor]
 
 #endif /* YLStatics_h */
